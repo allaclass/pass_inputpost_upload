@@ -23,13 +23,13 @@ var array_answer = [];
 
 var txt_info = document.getElementById('txt_info');
 var txt_title = document.getElementById('txt_title');
+var txt_license = document.getElementById('txt_license');
 var txt_object = document.getElementById('txt_object');
-var txt_kind = document.getElementById('txt_kind');
+var txt_etcObject = document.getElementById('txt_etcObject');
+var txt_office = document.getElementById('txt_office');
 var txt_year = document.getElementById('txt_year');
-var txt_seme = document.getElementById('txt_seme');
-var txt_grade = document.getElementById('txt_grade');
-var txt_prof = document.getElementById('txt_prof');
-var txt_range = document.getElementById('txt_range');
+var txt_noc = document.getElementById('txt_noc');
+var txt_date = document.getElementById('txt_date');
 var txt_snum = document.getElementById('txt_snum');
 var txt_enum = document.getElementById('txt_enum');
 var txt_count = document.getElementById('txt_count');
@@ -58,43 +58,43 @@ var src_answer_table_footer = "";
 var src_shortcut = "";
 var src_notice_footer = "";
 
-txt_info.value = "[과목명] \n[종  류] \n[연  도] \n[학  기] \n[학  년] \n[교수명] \n[셤범위] \n[시작넘] \n[종료넘] \n[썸네일] \n[정  답] ";
+txt_info.value = "[자격증명] \n[모의과목] \n[전체과목] \n[시행기관] \n[연도] \n[회차] \n[일시] \n[시작넘] \n[종료넘] \n[썸네일] \n[정  답] ";
 
 // txt_info data
 function info_input(){
     var infoData = txt_info.value;
-    var infoObject = infoData.indexOf('[과목명]');
-    var infoKind = infoData.indexOf('[종  류]');
-    var infoYear = infoData.indexOf('[연  도]');
-    var infoSeme = infoData.indexOf('[학  기]');
-    var infoGrade = infoData.indexOf('[학  년]');
-    var infoProf = infoData.indexOf('[교수명]');
-    var infoRange = infoData.indexOf('[셤범위]');
+    var infoLicense = infoData.indexOf('[자격증명]');
+    var infoObject = infoData.indexOf('[모의과목]');
+    var infoEtcObject = infoData.indexOf('[전체과목]');
+    var infoOffice = infoData.indexOf('[시행기관]');
+    var infoYear = infoData.indexOf('[연도]');
+    var infoNoc = infoData.indexOf('[회차]');
+    var infoDate = infoData.indexOf('[일시]');
     var infoSNum = infoData.indexOf('[시작넘]');
     var infoENum = infoData.indexOf('[종료넘]');
     var infoThumb = infoData.indexOf('[썸네일]');
-    var infoAnswer = infoData.indexOf('[정  답]');
+    var infoAnswer = infoData.indexOf('[정답]');
     var infoLength = infoData.length;
 
-    var infoObjectData = (infoData.substring(infoObject+5, infoKind)).replace(/(^\s*)|(\s*$)/gi, "");
-    var infoKindData = (infoData.substring(infoKind+6, infoYear)).replace(/(^\s*)|(\s*$)/gi, "");
-    var infoYearData = (infoData.substring(infoYear+6, infoSeme)).replace(/(^\s*)|(\s*$)/gi, "");
-    var infoSemeData = (infoData.substring(infoSeme+6, infoGrade)).replace(/(^\s*)|(\s*$)/gi, "");
-    var infoGradeData = (infoData.substring(infoGrade+6, infoProf)).replace(/(^\s*)|(\s*$)/gi, "");
-    var infoProfData = (infoData.substring(infoProf+5, infoRange)).replace(/(^\s*)|(\s*$)/gi, "");
-    var infoRangeData = (infoData.substring(infoRange+5, infoSNum)).replace(/(^\s*)|(\s*$)/gi, "");
+    var infoLicenseData = (infoData.substring(infoLicense+6, infoObject)).replace(/(^\s*)|(\s*$)/gi, "");
+    var infoObjectData = (infoData.substring(infoObject+6, infoEtcObject)).replace(/(^\s*)|(\s*$)/gi, "");
+    var infoEtcObjectData = (infoData.substring(infoEtcObject+6, infoOffice)).replace(/(^\s*)|(\s*$)/gi, "");
+    var infoOfficeData = (infoData.substring(infoOffice+6, infoYear)).replace(/(^\s*)|(\s*$)/gi, "");
+    var infoYearData = (infoData.substring(infoYear+4, infoNoc)).replace(/(^\s*)|(\s*$)/gi, "");
+    var infoNocData = (infoData.substring(infoNoc+4, infoDate)).replace(/(^\s*)|(\s*$)/gi, "");
+    var infoDateData = (infoData.substring(infoDate+4, infoSNum)).replace(/(^\s*)|(\s*$)/gi, "");
     var infoSNumData = (infoData.substring(infoSNum+5, infoENum)).replace(/(^\s*)|(\s*$)/gi, "");
     var infoENumData = (infoData.substring(infoENum+5, infoThumb)).replace(/(^\s*)|(\s*$)/gi, "");
     var infoThumbData = (infoData.substring(infoThumb+5, infoAnswer)).replace(/(^\s*)|(\s*$)/gi, "");
-    var infoAnswerData = (infoData.substring(infoAnswer+6, infoLength)).replace(/(^\s*)|(\s*$)/gi, "");
+    var infoAnswerData = (infoData.substring(infoAnswer+4, infoLength)).replace(/(^\s*)|(\s*$)/gi, "");
 
+    txt_license.value = infoLicenseData;
     txt_object.value = infoObjectData;
-    txt_kind.value = infoKindData;
+    txt_etcObject.value = infoEtcObjectData;
+    txt_office.value = infoOfficeData;
     txt_year.value = infoYearData;
-    txt_seme.value = infoSemeData;
-    txt_grade.value = infoGradeData;
-    txt_prof.value = infoProfData;
-    txt_range.value = infoRangeData;
+    txt_noc.value = infoNocData;
+    txt_date.value = infoDateData;
     txt_snum.value = infoSNumData;
     txt_enum.value = infoENumData;
     txt_thumb.value = infoThumbData;
@@ -961,7 +961,7 @@ function btn_lv2(){
 
 // auto post_title
 function post_title(){
-    txt_title.value = '방송대 '+txt_object.value+' '+txt_kind.value+'시험 20'+txt_year.value+'년도 '+txt_seme.value+'학기 '+txt_grade.value+'학년 / 올에이클래스 모의고사';
+    txt_title.value = '20'+txt_year.value+'년 '+txt_noc.value+'회 '+txt_license.value+' ('+txt_object.value+') 필기 / 올에이패스 모의고사';
 }
 
 // auto question_count
@@ -1102,13 +1102,13 @@ function html_title(){
     src_title += '<table class="allaTitleWrap">\n';
     src_title += '\t<tbody>\n';
     src_title += '\t\t<colgroup><col width="100px"><col></colgroup>\n';
-    src_title += '\t\t<tr><td colspan="3"><span class="ibold">20'+txt_year.value+'</span>&nbsp;학년도&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ibold">'+txt_seme.value+'</span>&nbsp;학기&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ibold">'+txt_grade.value+'</span>&nbsp;학년&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ibold">'+txt_count.value+'</span>&nbsp;문항</td></tr>\n';
+    src_title += '\t\t<tr><td colspan="3"><span class="ibold">20'+txt_year.value+'</span>&nbsp;년&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ibold">'+txt_noc.value+'</span>&nbsp;회&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ibold">'+txt_license.value+'</span></td></tr>\n';
     src_title += '\t\t<tr><td colspan="3">'+txt_object.value+'</td></tr>\n';
-    src_title += '\t\t<tr><td>시험종류&nbsp;&nbsp;&nbsp;:</td><td>'+txt_kind.value+'시험</td></tr>\n';
-    src_title += '\t\t<tr><td>출제위원&nbsp;&nbsp;&nbsp;:</td><td>'+txt_prof.value+'</td></tr>\n';
-    src_title += '\t\t<tr><td>출제범위&nbsp;&nbsp;&nbsp;:</td><td>'+txt_range.value+'</td></tr>\n';
-    src_title += '\t\t<tr><td>자료출처&nbsp;&nbsp;&nbsp;:</td><td>한국방송통신대학교</td></tr>\n';
-    src_title += '\t\t<tr><td>웹앱제작&nbsp;&nbsp;&nbsp;:</td><td>올에이클래스 김현수<span>(방송대 컴퓨터과학과)</span></td></tr>\n';
+    src_title += '\t\t<tr><td>시험종류&nbsp;&nbsp;&nbsp;:</td><td>필기시험</td></tr>\n';
+    src_title += '\t\t<tr><td>자격증명&nbsp;&nbsp;&nbsp;:</td><td>'+txt_license.value+'</td></tr>\n';
+    src_title += '\t\t<tr><td>모의과목&nbsp;&nbsp;&nbsp;:</td><td>'+txt_object.value+'</td></tr>\n';
+    src_title += '\t\t<tr><td>시행일시&nbsp;&nbsp;&nbsp;:</td><td>20'+txt_year.value+'년 '+txt_date.value+'</td></tr>\n';
+    src_title += '\t\t<tr><td>웹앱제작&nbsp;&nbsp;&nbsp;:</td><td>올에이패스 김현수</td></tr>\n';
     src_title += '\t</tbody>\n';
     src_title += '</table>\n';
     src_title += '<!-- ------------------------------------------------------------------------------------ -->\n\n';

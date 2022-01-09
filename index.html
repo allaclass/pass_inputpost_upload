@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>올에이클래스 - 포스트업로드</title>
+    <title>올에이패스 - 포스트업로드</title>
     <!-- style import -->
     <link rel="stylesheet" href="./css/alla-input-style.css">
     <link rel="stylesheet" href="./css/alla-post-common-2.0.1.css">
@@ -23,18 +23,18 @@
         <span>- &nbsp;&nbsp;끝맺음 있음: /부정~/.부정, /밑줄~/.밑줄, /굵게~/.굵게, /기움~/.기움, /줄, /빈칸</span><br>
         <span>- &nbsp;&nbsp;끝맺음 있음: /윗첨자~/.윗첨자, /아랫첨자~/.아랫첨자, /이미지~/.이미지</span><br><br>
         <!-- textarea -->
-        <textarea id="txt_object" name="txt_object" placeholder="과목명" onkeyup="post_title()"></textarea>
-        <textarea id="txt_kind" name="txt_kind" placeholder="종류" onkeyup="post_title()"></textarea>
-        <textarea id="txt_year" name="txt_year" placeholder="연도" onkeyup="post_title()"></textarea>
-        <textarea id="txt_seme" name="txt_seme" placeholder="학기" onkeyup="post_title()"></textarea>
-        <textarea id="txt_grade" name="txt_grade" placeholder="학년" onkeyup="post_title()"></textarea>
-        <textarea id="txt_prof" name="txt_prof" placeholder="교수명"></textarea>
-        <textarea id="txt_range" name="txt_range" placeholder="시험범위"></textarea>
-        <textarea id="txt_snum" name="txt_snum" placeholder="시작번호" onkeyup="question_count()"></textarea>
-        <textarea id="txt_enum" name="txt_enum" placeholder="종료번호" onkeyup="question_count()"></textarea>
-        <textarea id="txt_count" name="txt_count" placeholder="문항수" readonly></textarea>
-        <textarea id="txt_thumb" name="txt_thumb" placeholder="썸네일 주소"></textarea>
-        <textarea id="txt_answer" name="txt_answer" placeholder="정답"></textarea><br>
+        <textarea id="txt_license" name="txt_license" placeholder="[자격증명]" onkeyup="post_title()"></textarea>
+        <textarea id="txt_object" name="txt_object" placeholder="[모의과목]" onkeyup="post_title()"></textarea>
+        <textarea id="txt_etcObject" name="txt_etcObject" placeholder="[기타과목] (1) 1과목 (2) 2과목" onkeyup="post_title()"></textarea>
+        <textarea id="txt_office" name="txt_office" placeholder="[시행기관]" onkeyup="post_title()"></textarea>
+        <textarea id="txt_year" name="txt_year" placeholder="[연도]" onkeyup="post_title()"></textarea>
+        <textarea id="txt_noc" name="txt_noc" placeholder="[회차]"></textarea>
+        <textarea id="txt_date" name="txt_date" placeholder="[일시]"></textarea>
+        <textarea id="txt_snum" name="txt_snum" placeholder="[시작넘]" onkeyup="question_count()"></textarea>
+        <textarea id="txt_enum" name="txt_enum" placeholder="[종료넘]" onkeyup="question_count()"></textarea>
+        <textarea id="txt_count" name="txt_count" placeholder="[문항수]" readonly></textarea>
+        <textarea id="txt_thumb" name="txt_thumb" placeholder="[썸네일]"></textarea>
+        <textarea id="txt_answer" name="txt_answer" placeholder="[정답]"></textarea><br>
     </div>
 
     <textarea class="final" id="final" placeholder="3. html conversion"></textarea>
@@ -46,7 +46,7 @@
     <div id="postView" class="postView"></div>
     
     <!-- script import -->
-    <script type="text/javascript" src="./js/alla-input-common-3.0.3.js"></script>
+    <script type="text/javascript" src="./js/alla-input-common-1.0.1.js"></script>
     <script type="text/javascript" src="./js/alla-post-common-2.0.1.js"></script>
     <script type="text/javascript" src="./js/alla-post-shortcut-1.0.1.js"></script>
 

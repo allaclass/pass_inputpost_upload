@@ -122,19 +122,18 @@ div#postView {
 .menu textarea#txt_count {
     border: 1px solid #777;
 }
+
 .menu textarea#txt_year,
-.menu textarea#txt_seme,
-.menu textarea#txt_grade,
+.menu textarea#txt_noc,
+.menu textarea#txt_date,
 .menu textarea#txt_snum,
 .menu textarea#txt_enum,
 .menu textarea#txt_count {
     width: 32%;
 }
 
-.menu textarea#txt_object,
-.menu textarea#txt_kind,
-.menu textarea#txt_prof,
-.menu textarea#txt_range {
+.menu textarea#txt_license,
+.menu textarea#txt_object {
     width: 48.7%;
 }
 
