@@ -1,8 +1,9 @@
-// 제    목 : alla-input-common-3.0.1.js
+// 제    목 : alla-input-common-1.0.1.js
 // 작 성 자 : 김현수
-// 작 성 일 : 2021.04.20 - table-renewal
+// 작 성 일 : 2022.01.09
 // 
-// 업데이트 : 2021.12.01 - 모바일 URL 접근차단 추가
+// 업데이트 : alla-input-common-3.0.1.js copy
+// 업데이트 : 파일명 변경 (alla-input-common-1.0.1.js)
 
 
 // around variable
@@ -17,13 +18,14 @@ var array_answer = [];
 
 var txt_info = document.getElementById('txt_info');
 var txt_title = document.getElementById('txt_title');
+
+var txt_license = document.getElementById('txt_license');
 var txt_object = document.getElementById('txt_object');
-var txt_kind = document.getElementById('txt_kind');
+var txt_object_etc = document.getElementById('txt_object_etc');
+var txt_office = document.getElementById('txt_office');
 var txt_year = document.getElementById('txt_year');
-var txt_seme = document.getElementById('txt_seme');
-var txt_grade = document.getElementById('txt_grade');
-var txt_prof = document.getElementById('txt_prof');
-var txt_range = document.getElementById('txt_range');
+var txt_no = document.getElementById('txt_no');
+var txt_date = document.getElementById('txt_date');
 var txt_snum = document.getElementById('txt_snum');
 var txt_enum = document.getElementById('txt_enum');
 var txt_count = document.getElementById('txt_count');
@@ -52,7 +54,7 @@ var src_answer_table_footer = "";
 var src_shortcut = "";
 var src_notice_footer = "";
 
-// txt_info.value = "[과목명] \n[종  류] \n[연  도] \n[학  기] \n[학  년] \n[교수명] \n[셤범위] \n[시작넘] \n[종료넘] \n[썸네일] \n[정  답] ";
+txt_info.value = "[과목명] \n[종  류] \n[연  도] \n[학  기] \n[학  년] \n[교수명] \n[셤범위] \n[시작넘] \n[종료넘] \n[썸네일] \n[정  답] ";
 
 // txt_info data
 function info_input(){
@@ -140,9 +142,12 @@ function array_lv1_input(){
                 if((origin.indexOf('/추가보기문'))>0){  // 보기문 / 추가보기문
                     var example_txt_1s = origin.indexOf('/보기문');
                     var example_txt_2s = origin.indexOf('/추가보기문');
-                    var question = (origin.substring(number_length, example_txt_1s)).replace(/(^\s*)|(\s*$)/gi, "");
-                    var example_1 = (origin.substring(example_txt_1s+4, example_txt_2s)).replace(/(^\s*)|(\s*$)/gi, "");
-                    var example_2 = (origin.substring(example_txt_2s+6, origin.length)).replace(/(^\s*)|(\s*$)/gi, "");
+                    var question_ori = (origin.substring(number_length, example_txt_1s)).replace(/(^\s*)|(\s*$)/gi, "");
+                    var question = question_nagative_words(question_ori);
+                    var gihowords_ori = (origin.substring(example_txt_1s+4, example_txt_2s)).replace(/(^\s*)|(\s*$)/gi, "");
+                    var example_1 = other_giho_words(gihowords_ori);
+                    var gihowords_ori = (origin.substring(example_txt_2s+6, origin.length)).replace(/(^\s*)|(\s*$)/gi, "");
+                    var example_2 = other_giho_words(gihowords_ori);
                     // variable - result
                     var result = '/'+number+'/\n'+question+'\n/보기문\n'+example_1+'\n/추가보기문\n'+example_2+'\n\n';
                     var consolelog = 'number : /' + number + '/\nquestion : ' + question + '\nexample_txt : ' + example_1 + '\nexample_txt_add : ' + example_2+'\n\n';
@@ -159,8 +164,10 @@ function array_lv1_input(){
                 }else if((origin.indexOf('/추가보기그림'))>0){  // 보기문 / 추가보기그림
                     var example_txt_1s = origin.indexOf('/보기문');
                     var example_img_2s = origin.indexOf('/추가보기그림');
-                    var question = (origin.substring(number_length, example_txt_1s)).replace(/(^\s*)|(\s*$)/gi, "");
-                    var example_1 = (origin.substring(example_txt_1s+4, example_img_2s)).replace(/(^\s*)|(\s*$)/gi, "");
+                    var question_ori = (origin.substring(number_length, example_txt_1s)).replace(/(^\s*)|(\s*$)/gi, "");
+                    var question = question_nagative_words(question_ori);
+                    var gihowords_ori = (origin.substring(example_txt_1s+4, example_img_2s)).replace(/(^\s*)|(\s*$)/gi, "");
+                    var example_1 = other_giho_words(gihowords_ori);
                     var example_2 = (origin.substring(example_img_2s+7, origin.length)).replace(/(^\s*)|(\s*$)/gi, "");
                     // variable - result
                     var result = '/'+number+'/\n'+question+'\n/보기문\n'+example_1+'\n/추가보기그림\n'+example_2+'\n\n';
@@ -177,8 +184,10 @@ function array_lv1_input(){
                     html_group_question_end();
                 }else{  // 보기문만
                     var example_txt_1s = origin.indexOf('/보기문');
-                    var question = (origin.substring(number_length, example_txt_1s)).replace(/(^\s*)|(\s*$)/gi, "");
-                    var example_1 = (origin.substring(example_txt_1s+4, origin.length)).replace(/(^\s*)|(\s*$)/gi, "");
+                    var question_ori = (origin.substring(number_length, example_txt_1s)).replace(/(^\s*)|(\s*$)/gi, "");
+                    var question = question_nagative_words(question_ori);
+                    var gihowords_ori = (origin.substring(example_txt_1s+4, origin.length)).replace(/(^\s*)|(\s*$)/gi, "");
+                    var example_1 = other_giho_words(gihowords_ori);
                     // variable - result
                     var result = '/'+number+'/\n'+question+'\n/보기문\n'+example_1+'\n\n';
                     var consolelog = 'number : /' + number + '/\nquestion : ' + question + '\nexample_txt : ' + example_1+'\n\n';
@@ -196,7 +205,8 @@ function array_lv1_input(){
                 if((origin.indexOf('/추가보기그림'))>0){  // 보기그림 / 추가보기그림
                     var example_img_1s = origin.indexOf('/보기그림');
                     var example_img_2s = origin.indexOf('/추가보기그림');
-                    var question = (origin.substring(number_length, example_img_1s)).replace(/(^\s*)|(\s*$)/gi, "");
+                    var question_ori = (origin.substring(number_length, example_img_1s)).replace(/(^\s*)|(\s*$)/gi, "");
+                    var question = question_nagative_words(question_ori);
                     var example_1 = (origin.substring(example_img_1s+5, example_img_2s)).replace(/(^\s*)|(\s*$)/gi, "");
                     var example_2 = (origin.substring(example_img_2s+7, origin.length)).replace(/(^\s*)|(\s*$)/gi, "");
                     // variable - result
@@ -214,9 +224,11 @@ function array_lv1_input(){
                 }else if((origin.indexOf('/추가보기문'))>0){  // 보기그림 / 추가보기문
                     var example_img_1s = origin.indexOf('/보기그림');
                     var example_txt_2s = origin.indexOf('/추가보기문');
-                    var question = (origin.substring(number_length, example_img_1s)).replace(/(^\s*)|(\s*$)/gi, "");
+                    var question_ori = (origin.substring(number_length, example_img_1s)).replace(/(^\s*)|(\s*$)/gi, "");
+                    var question = question_nagative_words(question_ori);
                     var example_1 = (origin.substring(example_img_1s+5, example_txt_2s)).replace(/(^\s*)|(\s*$)/gi, "");
-                    var example_2 = (origin.substring(example_txt_2s+6, origin.length)).replace(/(^\s*)|(\s*$)/gi, "");
+                    var gihowords_ori = (origin.substring(example_txt_2s+6, origin.length)).replace(/(^\s*)|(\s*$)/gi, "");
+                    var example_2 = other_giho_words(gihowords_ori);
                     // variable - result
                     var result = '/'+number+'/\n'+question+'\n/보기그림\n'+example_1+'\n/추가보기문\n'+example_2+'\n\n';
                     var consolelog = 'number : /' + number + '/\nquestion : ' + question + '\nexample_img : ' + example_1 + '\nexample_txt_add : ' + example_2+'\n\n';
@@ -231,7 +243,8 @@ function array_lv1_input(){
                     html_group_question_end();
                 }else{  // 보기그림만
                     var example_img_1s = origin.indexOf('/보기그림');
-                    var question = (origin.substring(number_length, example_img_1s)).replace(/(^\s*)|(\s*$)/gi, "");
+                    var question_ori = (origin.substring(number_length, example_img_1s)).replace(/(^\s*)|(\s*$)/gi, "");
+                    var question = question_nagative_words(question_ori);
                     var example_1 = (origin.substring(example_img_1s+5, origin.length)).replace(/(^\s*)|(\s*$)/gi, "");
                     // variable - result
                     var result = '/'+number+'/\n'+question+'\n/보기그림\n'+example_1+'\n\n';
@@ -246,7 +259,8 @@ function array_lv1_input(){
                     html_group_question_end();
                 }
             }else{  // 일반형 (보기문 없음)
-                var question = (origin.substring(number_length, origin.length)).replace(/(^\s*)|(\s*$)/gi, "");
+                var question_ori = (origin.substring(number_length, origin.length)).replace(/(^\s*)|(\s*$)/gi, "");
+                var question = question_nagative_words(question_ori);
                 // variable - result
                 var result = '/'+number+'/\n'+question+'\n\n';
                 var consolelog = 'number : /' + number + '/\nquestion : ' + question+'\n\n';
@@ -284,13 +298,20 @@ function array_lv1_input(){
                     if((origin.indexOf('/추가보기문'))>0){  // 보기문 / 추가보기문
                         var example_txt_1s = origin.indexOf('/보기문');
                         var example_txt_2s = origin.indexOf('/추가보기문');
-                        var question = (origin.substring(number_e+1, example_txt_1s)).replace(/(^\s*)|(\s*$)/gi, "");
-                        var example_1 = (origin.substring(example_txt_1s+4, example_txt_2s)).replace(/(^\s*)|(\s*$)/gi, "");
-                        var example_2 = (origin.substring(example_txt_2s+6, answer_1s)).replace(/(^\s*)|(\s*$)/gi, "");
-                        var answer_1 = (origin.substring(answer_1s+1, answer_2s)).replace(/(^\s*)|(\s*$)/gi, "");
-                        var answer_2 = (origin.substring(answer_2s+1, answer_3s)).replace(/(^\s*)|(\s*$)/gi, "");
-                        var answer_3 = (origin.substring(answer_3s+1, answer_4s)).replace(/(^\s*)|(\s*$)/gi, "");
-                        var answer_4 = (origin.substring(answer_4s+1, answer_4e)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var question_ori = (origin.substring(number_e+1, example_txt_1s)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var question = question_nagative_words(question_ori);
+                        var gihowords_ori = (origin.substring(example_txt_1s+4, example_txt_2s)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var example_1 = other_giho_words(gihowords_ori);
+                        var gihowords_ori = (origin.substring(example_txt_2s+6, answer_1s)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var example_2 = other_giho_words(gihowords_ori);
+                        var gihowords_ori = (origin.substring(answer_1s+1, answer_2s)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var answer_1 = other_giho_words(gihowords_ori);
+                        var gihowords_ori = (origin.substring(answer_2s+1, answer_3s)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var answer_2 = other_giho_words(gihowords_ori);
+                        var gihowords_ori = (origin.substring(answer_3s+1, answer_4s)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var answer_3 = other_giho_words(gihowords_ori);
+                        var gihowords_ori = (origin.substring(answer_4s+1, answer_4e)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var answer_4 = other_giho_words(gihowords_ori);
                         // variable - result
                         var result = number+'.\n'+question+'\n/보기문\n'+example_1+'\n/추가보기문\n'+example_2+'\n① '+answer_1+'\n② '+answer_2+'\n③ '+answer_3+'\n④ '+answer_4+'\n\n';
                         var consolelog = 'number : ' + number + '\nquestion : ' + question + '\nexample_txt : ' + example_1 + '\nexample_txt_add : ' + example_2 + '\n① : ' + answer_1 + '\n② : ' + answer_2 + '\n③ : ' + answer_3 + '\n④ : ' + answer_4+'\n\n';
@@ -306,13 +327,19 @@ function array_lv1_input(){
                     }else if((origin.indexOf('/추가보기그림'))>0){  // 보기문 / 추가보기그림
                         var example_txt_1s = origin.indexOf('/보기문');
                         var example_img_2s = origin.indexOf('/추가보기그림');
-                        var question = (origin.substring(number_e+1, example_txt_1s)).replace(/(^\s*)|(\s*$)/gi, "");
-                        var example_1 = (origin.substring(example_txt_1s+4, example_img_2s)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var question_ori = (origin.substring(number_e+1, example_txt_1s)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var question = question_nagative_words(question_ori);
+                        var gihowords_ori = (origin.substring(example_txt_1s+4, example_img_2s)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var example_1 = other_giho_words(gihowords_ori);
                         var example_2 = (origin.substring(example_img_2s+7, answer_1s)).replace(/(^\s*)|(\s*$)/gi, "");
-                        var answer_1 = (origin.substring(answer_1s+1, answer_2s)).replace(/(^\s*)|(\s*$)/gi, "");
-                        var answer_2 = (origin.substring(answer_2s+1, answer_3s)).replace(/(^\s*)|(\s*$)/gi, "");
-                        var answer_3 = (origin.substring(answer_3s+1, answer_4s)).replace(/(^\s*)|(\s*$)/gi, "");
-                        var answer_4 = (origin.substring(answer_4s+1, answer_4e)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var gihowords_ori = (origin.substring(answer_1s+1, answer_2s)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var answer_1 = other_giho_words(gihowords_ori);
+                        var gihowords_ori = (origin.substring(answer_2s+1, answer_3s)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var answer_2 = other_giho_words(gihowords_ori);
+                        var gihowords_ori = (origin.substring(answer_3s+1, answer_4s)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var answer_3 = other_giho_words(gihowords_ori);
+                        var gihowords_ori = (origin.substring(answer_4s+1, answer_4e)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var answer_4 = other_giho_words(gihowords_ori);
                         // variable - result
                         var result = number+'.\n'+question+'\n/보기문\n'+example_1+'\n/추가보기그림\n'+example_2+'\n① '+answer_1+'\n② '+answer_2+'\n③ '+answer_3+'\n④ '+answer_4+'\n\n';
                         var consolelog = 'number : ' + number + '\nquestion : ' + question + '\nexample_txt : ' + example_1 + '\nexample_img_add : ' + example_2 + '\n① : ' + answer_1 + '\n② : ' + answer_2 + '\n③ : ' + answer_3 + '\n④ : ' + answer_4+'\n\n';
@@ -327,12 +354,18 @@ function array_lv1_input(){
                         html_question_answer(number, answer_1, answer_2, answer_3, answer_4);
                     }else{  // 보기문만
                         var example_txt_1s = origin.indexOf('/보기문');
-                        var question = (origin.substring(number_e+1, example_txt_1s)).replace(/(^\s*)|(\s*$)/gi, "");
-                        var example_1 = (origin.substring(example_txt_1s+4, answer_1s)).replace(/(^\s*)|(\s*$)/gi, "");
-                        var answer_1 = (origin.substring(answer_1s+1, answer_2s)).replace(/(^\s*)|(\s*$)/gi, "");
-                        var answer_2 = (origin.substring(answer_2s+1, answer_3s)).replace(/(^\s*)|(\s*$)/gi, "");
-                        var answer_3 = (origin.substring(answer_3s+1, answer_4s)).replace(/(^\s*)|(\s*$)/gi, "");
-                        var answer_4 = (origin.substring(answer_4s+1, answer_4e)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var question_ori = (origin.substring(number_e+1, example_txt_1s)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var question = question_nagative_words(question_ori);
+                        var gihowords_ori = (origin.substring(example_txt_1s+4, answer_1s)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var example_1 = other_giho_words(gihowords_ori);
+                        var gihowords_ori = (origin.substring(answer_1s+1, answer_2s)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var answer_1 = other_giho_words(gihowords_ori);
+                        var gihowords_ori = (origin.substring(answer_2s+1, answer_3s)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var answer_2 = other_giho_words(gihowords_ori);
+                        var gihowords_ori = (origin.substring(answer_3s+1, answer_4s)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var answer_3 = other_giho_words(gihowords_ori);
+                        var gihowords_ori = (origin.substring(answer_4s+1, answer_4e)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var answer_4 = other_giho_words(gihowords_ori);
                         // variable - result
                         var result = number+'.\n'+question+'\n/보기문\n'+example_1+'\n① '+answer_1+'\n② '+answer_2+'\n③ '+answer_3+'\n④ '+answer_4+'\n\n';
                         var consolelog = 'number : ' + number + '\nquestion : ' + question + '\nexample_txt : ' + example_1 + '\n① : ' + answer_1 + '\n② : ' + answer_2 + '\n③ : ' + answer_3 + '\n④ : ' + answer_4+'\n\n';
@@ -349,13 +382,18 @@ function array_lv1_input(){
                     if((origin.indexOf('/추가보기그림'))>0){  // 보기그림 / 추가보기그림
                         var example_img_1s = origin.indexOf('/보기그림');
                         var example_img_2s = origin.indexOf('/추가보기그림');
-                        var question = (origin.substring(number_e+1, example_img_1s)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var question_ori = (origin.substring(number_e+1, example_img_1s)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var question = question_nagative_words(question_ori);
                         var example_1 = (origin.substring(example_img_1s+5, example_img_2s)).replace(/(^\s*)|(\s*$)/gi, "");
                         var example_2 = (origin.substring(example_img_2s+7, answer_1s)).replace(/(^\s*)|(\s*$)/gi, "");
-                        var answer_1 = (origin.substring(answer_1s+1, answer_2s)).replace(/(^\s*)|(\s*$)/gi, "");
-                        var answer_2 = (origin.substring(answer_2s+1, answer_3s)).replace(/(^\s*)|(\s*$)/gi, "");
-                        var answer_3 = (origin.substring(answer_3s+1, answer_4s)).replace(/(^\s*)|(\s*$)/gi, "");
-                        var answer_4 = (origin.substring(answer_4s+1, answer_4e)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var gihowords_ori = (origin.substring(answer_1s+1, answer_2s)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var answer_1 = other_giho_words(gihowords_ori);
+                        var gihowords_ori = (origin.substring(answer_2s+1, answer_3s)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var answer_2 = other_giho_words(gihowords_ori);
+                        var gihowords_ori = (origin.substring(answer_3s+1, answer_4s)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var answer_3 = other_giho_words(gihowords_ori);
+                        var gihowords_ori = (origin.substring(answer_4s+1, answer_4e)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var answer_4 = other_giho_words(gihowords_ori);
                         // variable - result
                         var result = number+'.\n'+question+'\n/보기그림\n'+example_1+'\n/추가보기그림\n'+example_2+'\n① '+answer_1+'\n② '+answer_2+'\n③ '+answer_3+'\n④ '+answer_4+'\n\n';
                         var consolelog = 'number : ' + number + '\nquestion : ' + question + '\nexample_img : ' + example_1 + '\nexample_img_add : ' + example_2 + '\n① : ' + answer_1 + '\n② : ' + answer_2 + '\n③ : ' + answer_3 + '\n④ : ' + answer_4+'\n\n';
@@ -371,13 +409,19 @@ function array_lv1_input(){
                     }else if((origin.indexOf('/추가보기문'))>0){  // 보기그림 / 추가보기문
                         var example_img_1s = origin.indexOf('/보기그림');
                         var example_txt_2s = origin.indexOf('/추가보기문');
-                        var question = (origin.substring(number_e+1, example_img_1s)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var question_ori = (origin.substring(number_e+1, example_img_1s)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var question = question_nagative_words(question_ori);
                         var example_1 = (origin.substring(example_img_1s+5, example_txt_2s)).replace(/(^\s*)|(\s*$)/gi, "");
-                        var example_2 = (origin.substring(example_txt_2s+6, answer_1s)).replace(/(^\s*)|(\s*$)/gi, "");
-                        var answer_1 = (origin.substring(answer_1s+1, answer_2s)).replace(/(^\s*)|(\s*$)/gi, "");
-                        var answer_2 = (origin.substring(answer_2s+1, answer_3s)).replace(/(^\s*)|(\s*$)/gi, "");
-                        var answer_3 = (origin.substring(answer_3s+1, answer_4s)).replace(/(^\s*)|(\s*$)/gi, "");
-                        var answer_4 = (origin.substring(answer_4s+1, answer_4e)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var gihowords_ori = (origin.substring(example_txt_2s+6, answer_1s)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var example_2 = other_giho_words(gihowords_ori);
+                        var gihowords_ori = (origin.substring(answer_1s+1, answer_2s)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var answer_1 = other_giho_words(gihowords_ori);
+                        var gihowords_ori = (origin.substring(answer_2s+1, answer_3s)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var answer_2 = other_giho_words(gihowords_ori);
+                        var gihowords_ori = (origin.substring(answer_3s+1, answer_4s)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var answer_3 = other_giho_words(gihowords_ori);
+                        var gihowords_ori = (origin.substring(answer_4s+1, answer_4e)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var answer_4 = other_giho_words(gihowords_ori);
                         // variable - result
                         var result = number+'.\n'+question+'\n/보기그림\n'+example_1+'\n/추가보기문\n'+example_2+'\n① '+answer_1+'\n② '+answer_2+'\n③ '+answer_3+'\n④ '+answer_4+'\n\n';
                         var consolelog = 'number : ' + number + '\nquestion : ' + question + '\nexample_img : ' + example_1 + '\nexample_txt_add : ' + example_2 + '\n① : ' + answer_1 + '\n② : ' + answer_2 + '\n③ : ' + answer_3 + '\n④ : ' + answer_4+'\n\n';
@@ -392,12 +436,17 @@ function array_lv1_input(){
                         html_question_answer(number, answer_1, answer_2, answer_3, answer_4);
                     }else{  // 보기그림만
                         var example_img_1s = origin.indexOf('/보기그림');
-                        var question = (origin.substring(number_e+1, example_img_1s)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var question_ori = (origin.substring(number_e+1, example_img_1s)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var question = question_nagative_words(question_ori);
                         var example_1 = (origin.substring(example_img_1s+5, answer_1s)).replace(/(^\s*)|(\s*$)/gi, "");
-                        var answer_1 = (origin.substring(answer_1s+1, answer_2s)).replace(/(^\s*)|(\s*$)/gi, "");
-                        var answer_2 = (origin.substring(answer_2s+1, answer_3s)).replace(/(^\s*)|(\s*$)/gi, "");
-                        var answer_3 = (origin.substring(answer_3s+1, answer_4s)).replace(/(^\s*)|(\s*$)/gi, "");
-                        var answer_4 = (origin.substring(answer_4s+1, answer_4e)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var gihowords_ori = (origin.substring(answer_1s+1, answer_2s)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var answer_1 = other_giho_words(gihowords_ori);
+                        var gihowords_ori = (origin.substring(answer_2s+1, answer_3s)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var answer_2 = other_giho_words(gihowords_ori);
+                        var gihowords_ori = (origin.substring(answer_3s+1, answer_4s)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var answer_3 = other_giho_words(gihowords_ori);
+                        var gihowords_ori = (origin.substring(answer_4s+1, answer_4e)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var answer_4 = other_giho_words(gihowords_ori);
                         // variable - result
                         var result = number+'.\n'+question+'\n/보기그림\n'+example_1+'\n① '+answer_1+'\n② '+answer_2+'\n③ '+answer_3+'\n④ '+answer_4+'\n\n';
                         var consolelog = 'number : ' + number + '\nquestion : ' + question + '\nexample_img : ' + example_1 + '\n① : ' + answer_1 + '\n② : ' + answer_2 + '\n③ : ' + answer_3 + '\n④ : ' + answer_4+'\n\n';
@@ -411,11 +460,16 @@ function array_lv1_input(){
                         html_question_answer(number, answer_1, answer_2, answer_3, answer_4);
                     }
                 }else{  // 일반형 (보기문 없음)
-                    var question = (origin.substring(number_e+1, answer_1s)).replace(/(^\s*)|(\s*$)/gi, "");
-                    var answer_1 = (origin.substring(answer_1s+1, answer_2s)).replace(/(^\s*)|(\s*$)/gi, "");
-                    var answer_2 = (origin.substring(answer_2s+1, answer_3s)).replace(/(^\s*)|(\s*$)/gi, "");
-                    var answer_3 = (origin.substring(answer_3s+1, answer_4s)).replace(/(^\s*)|(\s*$)/gi, "");
-                    var answer_4 = (origin.substring(answer_4s+1, answer_4e)).replace(/(^\s*)|(\s*$)/gi, "");
+                    var question_ori = (origin.substring(number_e+1, answer_1s)).replace(/(^\s*)|(\s*$)/gi, "");
+                    var question = question_nagative_words(question_ori);
+                    var gihowords_ori = (origin.substring(answer_1s+1, answer_2s)).replace(/(^\s*)|(\s*$)/gi, "");
+                    var answer_1 = other_giho_words(gihowords_ori);
+                    var gihowords_ori = (origin.substring(answer_2s+1, answer_3s)).replace(/(^\s*)|(\s*$)/gi, "");
+                    var answer_2 = other_giho_words(gihowords_ori);
+                    var gihowords_ori = (origin.substring(answer_3s+1, answer_4s)).replace(/(^\s*)|(\s*$)/gi, "");
+                    var answer_3 = other_giho_words(gihowords_ori);
+                    var gihowords_ori = (origin.substring(answer_4s+1, answer_4e)).replace(/(^\s*)|(\s*$)/gi, "");
+                    var answer_4 = other_giho_words(gihowords_ori);
                     // variable - result
                     var result = number+'.\n'+question+'\n① '+answer_1+'\n② '+answer_2+'\n③ '+answer_3+'\n④ '+answer_4+'\n\n';
                     var consolelog = 'number : ' + number + '\nquestion : ' + question + '\n① : ' + answer_1 + '\n② : ' + answer_2 + '\n③ : ' + answer_3 + '\n④ : ' + answer_4+'\n\n';
@@ -450,13 +504,20 @@ function array_lv1_input(){
                         if((origin.indexOf('/추가보기문'))>0){  // 보기문 / 추가보기문
                             var example_txt_1s = origin.indexOf('/보기문');
                             var example_txt_2s = origin.indexOf('/추가보기문');
-                            var question = (origin.substring(number_e+1, example_txt_1s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var example_1 = (origin.substring(example_txt_1s+4, example_txt_2s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var example_2 = (origin.substring(example_txt_2s+6, answer_1s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var answer_1 = (origin.substring(answer_1s+1, answer_2s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var answer_2 = (origin.substring(answer_2s+1, answer_3s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var answer_3 = (origin.substring(answer_3s+1, answer_4s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var answer_4 = (origin.substring(answer_4s+1, answer_4e)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var question_ori = (origin.substring(number_e+1, example_txt_1s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var question = question_nagative_words(question_ori);
+                            var gihowords_ori = (origin.substring(example_txt_1s+4, example_txt_2s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var example_1 = other_giho_words(gihowords_ori);
+                            var gihowords_ori = (origin.substring(example_txt_2s+6, answer_1s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var example_2 = other_giho_words(gihowords_ori);
+                            var gihowords_ori = (origin.substring(answer_1s+1, answer_2s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var answer_1 = other_giho_words(gihowords_ori);
+                            var gihowords_ori = (origin.substring(answer_2s+1, answer_3s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var answer_2 = other_giho_words(gihowords_ori);
+                            var gihowords_ori = (origin.substring(answer_3s+1, answer_4s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var answer_3 = other_giho_words(gihowords_ori);
+                            var gihowords_ori = (origin.substring(answer_4s+1, answer_4e)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var answer_4 = other_giho_words(gihowords_ori);
                             // variable - result
                             var result = number+'.\n'+question+'\n/보기문\n'+example_1+'\n/추가보기문\n'+example_2+'\n① '+answer_1+'\n② '+answer_2+'\n③ '+answer_3+'\n④ '+answer_4+'\n\n';
                             var consolelog = 'number : ' + number + '\nquestion : ' + question + '\nexample_txt : ' + example_1 + '\nexample_txt_add : ' + example_2 + '\n① : ' + answer_1 + '\n② : ' + answer_2 + '\n③ : ' + answer_3 + '\n④ : ' + answer_4+'\n\n';
@@ -472,13 +533,19 @@ function array_lv1_input(){
                         }else if((origin.indexOf('/추가보기그림'))>0){  // 보기문 / 추가보기그림
                             var example_txt_1s = origin.indexOf('/보기문');
                             var example_img_2s = origin.indexOf('/추가보기그림');
-                            var question = (origin.substring(number_e+1, example_txt_1s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var example_1 = (origin.substring(example_txt_1s+4, example_img_2s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var question_ori = (origin.substring(number_e+1, example_txt_1s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var question = question_nagative_words(question_ori);
+                            var gihowords_ori = (origin.substring(example_txt_1s+4, example_img_2s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var example_1 = other_giho_words(gihowords_ori);
                             var example_2 = (origin.substring(example_img_2s+7, answer_1s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var answer_1 = (origin.substring(answer_1s+1, answer_2s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var answer_2 = (origin.substring(answer_2s+1, answer_3s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var answer_3 = (origin.substring(answer_3s+1, answer_4s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var answer_4 = (origin.substring(answer_4s+1, answer_4e)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var gihowords_ori = (origin.substring(answer_1s+1, answer_2s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var answer_1 = other_giho_words(gihowords_ori);
+                            var gihowords_ori = (origin.substring(answer_2s+1, answer_3s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var answer_2 = other_giho_words(gihowords_ori);
+                            var gihowords_ori = (origin.substring(answer_3s+1, answer_4s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var answer_3 = other_giho_words(gihowords_ori);
+                            var gihowords_ori = (origin.substring(answer_4s+1, answer_4e)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var answer_4 = other_giho_words(gihowords_ori);
                             // variable - result
                             var result = number+'.\n'+question+'\n/보기문\n'+example_1+'\n/추가보기그림\n'+example_2+'\n① '+answer_1+'\n② '+answer_2+'\n③ '+answer_3+'\n④ '+answer_4+'\n\n';
                             var consolelog = 'number : ' + number + '\nquestion : ' + question + '\nexample_txt : ' + example_1 + '\nexample_img_add : ' + example_2 + '\n① : ' + answer_1 + '\n② : ' + answer_2 + '\n③ : ' + answer_3 + '\n④ : ' + answer_4+'\n\n';
@@ -493,12 +560,18 @@ function array_lv1_input(){
                             html_question_answer(number, answer_1, answer_2, answer_3, answer_4);
                         }else{  // 보기문만
                             var example_txt_1s = origin.indexOf('/보기문');
-                            var question = (origin.substring(number_e+1, example_txt_1s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var example_1 = (origin.substring(example_txt_1s+4, answer_1s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var answer_1 = (origin.substring(answer_1s+1, answer_2s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var answer_2 = (origin.substring(answer_2s+1, answer_3s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var answer_3 = (origin.substring(answer_3s+1, answer_4s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var answer_4 = (origin.substring(answer_4s+1, answer_4e)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var question_ori = (origin.substring(number_e+1, example_txt_1s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var question = question_nagative_words(question_ori);
+                            var gihowords_ori = (origin.substring(example_txt_1s+4, answer_1s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var example_1 = other_giho_words(gihowords_ori);
+                            var gihowords_ori = (origin.substring(answer_1s+1, answer_2s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var answer_1 = other_giho_words(gihowords_ori);
+                            var gihowords_ori = (origin.substring(answer_2s+1, answer_3s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var answer_2 = other_giho_words(gihowords_ori);
+                            var gihowords_ori = (origin.substring(answer_3s+1, answer_4s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var answer_3 = other_giho_words(gihowords_ori);
+                            var gihowords_ori = (origin.substring(answer_4s+1, answer_4e)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var answer_4 = other_giho_words(gihowords_ori);
                             // variable - result
                             var result = number+'.\n'+question+'\n/보기문\n'+example_1+'\n① '+answer_1+'\n② '+answer_2+'\n③ '+answer_3+'\n④ '+answer_4+'\n\n';
                             var consolelog = 'number : ' + number + '\nquestion : ' + question + '\nexample_txt : ' + example_1 + '\n① : ' + answer_1 + '\n② : ' + answer_2 + '\n③ : ' + answer_3 + '\n④ : ' + answer_4+'\n\n';
@@ -515,13 +588,18 @@ function array_lv1_input(){
                         if((origin.indexOf('/추가보기그림'))>0){  // 보기그림 / 추가보기그림
                             var example_img_1s = origin.indexOf('/보기그림');
                             var example_img_2s = origin.indexOf('/추가보기그림');
-                            var question = (origin.substring(number_e+1, example_img_1s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var question_ori = (origin.substring(number_e+1, example_img_1s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var question = question_nagative_words(question_ori);
                             var example_1 = (origin.substring(example_img_1s+5, example_img_2s)).replace(/(^\s*)|(\s*$)/gi, "");
                             var example_2 = (origin.substring(example_img_2s+7, answer_1s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var answer_1 = (origin.substring(answer_1s+1, answer_2s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var answer_2 = (origin.substring(answer_2s+1, answer_3s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var answer_3 = (origin.substring(answer_3s+1, answer_4s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var answer_4 = (origin.substring(answer_4s+1, answer_4e)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var gihowords_ori = (origin.substring(answer_1s+1, answer_2s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var answer_1 = other_giho_words(gihowords_ori);
+                            var gihowords_ori = (origin.substring(answer_2s+1, answer_3s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var answer_2 = other_giho_words(gihowords_ori);
+                            var gihowords_ori = (origin.substring(answer_3s+1, answer_4s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var answer_3 = other_giho_words(gihowords_ori);
+                            var gihowords_ori = (origin.substring(answer_4s+1, answer_4e)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var answer_4 = other_giho_words(gihowords_ori);
                             // variable - result
                             var result = number+'.\n'+question+'\n/보기그림\n'+example_1+'\n/추가보기그림\n'+example_2+'\n① '+answer_1+'\n② '+answer_2+'\n③ '+answer_3+'\n④ '+answer_4+'\n\n';
                             var consolelog = 'number : ' + number + '\nquestion : ' + question + '\nexample_img : ' + example_1 + '\nexample_img_add : ' + example_2 + '\n① : ' + answer_1 + '\n② : ' + answer_2 + '\n③ : ' + answer_3 + '\n④ : ' + answer_4+'\n\n';
@@ -537,13 +615,19 @@ function array_lv1_input(){
                         }else if((origin.indexOf('/추가보기문'))>0){  // 보기그림 / 추가보기문
                             var example_img_1s = origin.indexOf('/보기그림');
                             var example_txt_2s = origin.indexOf('/추가보기문');
-                            var question = (origin.substring(number_e+1, example_img_1s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var question_ori = (origin.substring(number_e+1, example_img_1s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var question = question_nagative_words(question_ori);
                             var example_1 = (origin.substring(example_img_1s+5, example_txt_2s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var example_2 = (origin.substring(example_txt_2s+6, answer_1s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var answer_1 = (origin.substring(answer_1s+1, answer_2s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var answer_2 = (origin.substring(answer_2s+1, answer_3s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var answer_3 = (origin.substring(answer_3s+1, answer_4s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var answer_4 = (origin.substring(answer_4s+1, answer_4e)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var gihowords_ori = (origin.substring(example_txt_2s+6, answer_1s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var example_2 = other_giho_words(gihowords_ori);
+                            var gihowords_ori = (origin.substring(answer_1s+1, answer_2s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var answer_1 = other_giho_words(gihowords_ori);
+                            var gihowords_ori = (origin.substring(answer_2s+1, answer_3s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var answer_2 = other_giho_words(gihowords_ori);
+                            var gihowords_ori = (origin.substring(answer_3s+1, answer_4s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var answer_3 = other_giho_words(gihowords_ori);
+                            var gihowords_ori = (origin.substring(answer_4s+1, answer_4e)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var answer_4 = other_giho_words(gihowords_ori);
                             // variable - result
                             var result = number+'.\n'+question+'\n/보기그림\n'+example_1+'\n/추가보기문\n'+example_2+'\n① '+answer_1+'\n② '+answer_2+'\n③ '+answer_3+'\n④ '+answer_4+'\n\n';
                             var consolelog = 'number : ' + number + '\nquestion : ' + question + '\nexample_img : ' + example_1 + '\nexample_txt_add : ' + example_2 + '\n① : ' + answer_1 + '\n② : ' + answer_2 + '\n③ : ' + answer_3 + '\n④ : ' + answer_4+'\n\n';
@@ -558,12 +642,17 @@ function array_lv1_input(){
                             html_question_answer(number, answer_1, answer_2, answer_3, answer_4);
                         }else{  // 보기그림만
                             var example_img_1s = origin.indexOf('/보기그림');
-                            var question = (origin.substring(number_e+1, example_img_1s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var question_ori = (origin.substring(number_e+1, example_img_1s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var question = question_nagative_words(question_ori);
                             var example_1 = (origin.substring(example_img_1s+5, answer_1s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var answer_1 = (origin.substring(answer_1s+1, answer_2s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var answer_2 = (origin.substring(answer_2s+1, answer_3s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var answer_3 = (origin.substring(answer_3s+1, answer_4s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var answer_4 = (origin.substring(answer_4s+1, answer_4e)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var gihowords_ori = (origin.substring(answer_1s+1, answer_2s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var answer_1 = other_giho_words(gihowords_ori);
+                            var gihowords_ori = (origin.substring(answer_2s+1, answer_3s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var answer_2 = other_giho_words(gihowords_ori);
+                            var gihowords_ori = (origin.substring(answer_3s+1, answer_4s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var answer_3 = other_giho_words(gihowords_ori);
+                            var gihowords_ori = (origin.substring(answer_4s+1, answer_4e)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var answer_4 = other_giho_words(gihowords_ori);
                             // variable - result
                             var result = number+'.\n'+question+'\n/보기그림\n'+example_1+'\n① '+answer_1+'\n② '+answer_2+'\n③ '+answer_3+'\n④ '+answer_4+'\n\n';
                             var consolelog = 'number : ' + number + '\nquestion : ' + question + '\nexample_img : ' + example_1 + '\n① : ' + answer_1 + '\n② : ' + answer_2 + '\n③ : ' + answer_3 + '\n④ : ' + answer_4+'\n\n';
@@ -577,11 +666,16 @@ function array_lv1_input(){
                             html_question_answer(number, answer_1, answer_2, answer_3, answer_4);
                         }
                     }else{  // 일반형 (보기문 없음)
-                        var question = (origin.substring(number_e+1, answer_1s)).replace(/(^\s*)|(\s*$)/gi, "");
-                        var answer_1 = (origin.substring(answer_1s+1, answer_2s)).replace(/(^\s*)|(\s*$)/gi, "");
-                        var answer_2 = (origin.substring(answer_2s+1, answer_3s)).replace(/(^\s*)|(\s*$)/gi, "");
-                        var answer_3 = (origin.substring(answer_3s+1, answer_4s)).replace(/(^\s*)|(\s*$)/gi, "");
-                        var answer_4 = (origin.substring(answer_4s+1, answer_4e)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var question_ori = (origin.substring(number_e+1, answer_1s)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var question = question_nagative_words(question_ori);
+                        var gihowords_ori = (origin.substring(answer_1s+1, answer_2s)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var answer_1 = other_giho_words(gihowords_ori);
+                        var gihowords_ori = (origin.substring(answer_2s+1, answer_3s)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var answer_2 = other_giho_words(gihowords_ori);
+                        var gihowords_ori = (origin.substring(answer_3s+1, answer_4s)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var answer_3 = other_giho_words(gihowords_ori);
+                        var gihowords_ori = (origin.substring(answer_4s+1, answer_4e)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var answer_4 = other_giho_words(gihowords_ori);
                         // variable - result
                         var result = number+'.\n'+question+'\n① '+answer_1+'\n② '+answer_2+'\n③ '+answer_3+'\n④ '+answer_4+'\n\n';
                         var consolelog = 'number : ' + number + '\nquestion : ' + question + '\n① : ' + answer_1 + '\n② : ' + answer_2 + '\n③ : ' + answer_3 + '\n④ : ' + answer_4+'\n\n';
@@ -617,13 +711,20 @@ function array_lv1_input(){
                         if((origin.indexOf('/추가보기문'))>0){  // 보기문 / 추가보기문
                             var example_txt_1s = origin.indexOf('/보기문');
                             var example_txt_2s = origin.indexOf('/추가보기문');
-                            var question = (origin.substring(number_e+1, example_txt_1s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var example_1 = (origin.substring(example_txt_1s+4, example_txt_2s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var example_2 = (origin.substring(example_txt_2s+6, answer_1s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var answer_1 = (origin.substring(answer_1s+1, answer_2s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var answer_2 = (origin.substring(answer_2s+1, answer_3s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var answer_3 = (origin.substring(answer_3s+1, answer_4s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var answer_4 = (origin.substring(answer_4s+1, answer_4e)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var question_ori = (origin.substring(number_e+1, example_txt_1s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var question = question_nagative_words(question_ori);
+                            var gihowords_ori = (origin.substring(example_txt_1s+4, example_txt_2s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var example_1 = other_giho_words(gihowords_ori);
+                            var gihowords_ori = (origin.substring(example_txt_2s+6, answer_1s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var example_2 = other_giho_words(gihowords_ori);
+                            var gihowords_ori = (origin.substring(answer_1s+1, answer_2s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var answer_1 = other_giho_words(gihowords_ori);
+                            var gihowords_ori = (origin.substring(answer_2s+1, answer_3s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var answer_2 = other_giho_words(gihowords_ori);
+                            var gihowords_ori = (origin.substring(answer_3s+1, answer_4s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var answer_3 = other_giho_words(gihowords_ori);
+                            var gihowords_ori = (origin.substring(answer_4s+1, answer_4e)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var answer_4 = other_giho_words(gihowords_ori);
                             // variable - result
                             var result = number+'.\n'+question+'\n/보기문\n'+example_1+'\n/추가보기문\n'+example_2+'\n① '+answer_1+'\n② '+answer_2+'\n③ '+answer_3+'\n④ '+answer_4+'\n\n';
                             var consolelog = 'number : ' + number + '\nquestion : ' + question + '\nexample_txt : ' + example_1 + '\nexample_txt_add : ' + example_2 + '\n① : ' + answer_1 + '\n② : ' + answer_2 + '\n③ : ' + answer_3 + '\n④ : ' + answer_4+'\n\n';
@@ -639,13 +740,19 @@ function array_lv1_input(){
                         }else if((origin.indexOf('/추가보기그림'))>0){  // 보기문 / 추가보기그림
                             var example_txt_1s = origin.indexOf('/보기문');
                             var example_img_2s = origin.indexOf('/추가보기그림');
-                            var question = (origin.substring(number_e+1, example_txt_1s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var example_1 = (origin.substring(example_txt_1s+4, example_img_2s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var question_ori = (origin.substring(number_e+1, example_txt_1s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var question = question_nagative_words(question_ori);
+                            var gihowords_ori = (origin.substring(example_txt_1s+4, example_img_2s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var example_1 = other_giho_words(gihowords_ori);
                             var example_2 = (origin.substring(example_img_2s+7, answer_1s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var answer_1 = (origin.substring(answer_1s+1, answer_2s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var answer_2 = (origin.substring(answer_2s+1, answer_3s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var answer_3 = (origin.substring(answer_3s+1, answer_4s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var answer_4 = (origin.substring(answer_4s+1, answer_4e)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var gihowords_ori = (origin.substring(answer_1s+1, answer_2s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var answer_1 = other_giho_words(gihowords_ori);
+                            var gihowords_ori = (origin.substring(answer_2s+1, answer_3s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var answer_2 = other_giho_words(gihowords_ori);
+                            var gihowords_ori = (origin.substring(answer_3s+1, answer_4s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var answer_3 = other_giho_words(gihowords_ori);
+                            var gihowords_ori = (origin.substring(answer_4s+1, answer_4e)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var answer_4 = other_giho_words(gihowords_ori);
                             // variable - result
                             var result = number+'.\n'+question+'\n/보기문\n'+example_1+'\n/추가보기그림\n'+example_2+'\n① '+answer_1+'\n② '+answer_2+'\n③ '+answer_3+'\n④ '+answer_4+'\n\n';
                             var consolelog = 'number : ' + number + '\nquestion : ' + question + '\nexample_txt : ' + example_1 + '\nexample_img_add : ' + example_2 + '\n① : ' + answer_1 + '\n② : ' + answer_2 + '\n③ : ' + answer_3 + '\n④ : ' + answer_4+'\n\n';
@@ -660,12 +767,18 @@ function array_lv1_input(){
                             html_question_answer(number, answer_1, answer_2, answer_3, answer_4);
                         }else{  // 보기문만
                             var example_txt_1s = origin.indexOf('/보기문');
-                            var question = (origin.substring(number_e+1, example_txt_1s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var example_1 = (origin.substring(example_txt_1s+4, answer_1s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var answer_1 = (origin.substring(answer_1s+1, answer_2s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var answer_2 = (origin.substring(answer_2s+1, answer_3s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var answer_3 = (origin.substring(answer_3s+1, answer_4s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var answer_4 = (origin.substring(answer_4s+1, answer_4e)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var question_ori = (origin.substring(number_e+1, example_txt_1s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var question = question_nagative_words(question_ori);
+                            var gihowords_ori = (origin.substring(example_txt_1s+4, answer_1s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var example_1 = other_giho_words(gihowords_ori);
+                            var gihowords_ori = (origin.substring(answer_1s+1, answer_2s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var answer_1 = other_giho_words(gihowords_ori);
+                            var gihowords_ori = (origin.substring(answer_2s+1, answer_3s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var answer_2 = other_giho_words(gihowords_ori);
+                            var gihowords_ori = (origin.substring(answer_3s+1, answer_4s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var answer_3 = other_giho_words(gihowords_ori);
+                            var gihowords_ori = (origin.substring(answer_4s+1, answer_4e)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var answer_4 = other_giho_words(gihowords_ori);
                             // variable - result
                             var result = number+'.\n'+question+'\n/보기문\n'+example_1+'\n① '+answer_1+'\n② '+answer_2+'\n③ '+answer_3+'\n④ '+answer_4+'\n\n';
                             var consolelog = 'number : ' + number + '\nquestion : ' + question + '\nexample_txt : ' + example_1 + '\n① : ' + answer_1 + '\n② : ' + answer_2 + '\n③ : ' + answer_3 + '\n④ : ' + answer_4+'\n\n';
@@ -682,13 +795,18 @@ function array_lv1_input(){
                         if((origin.indexOf('/추가보기그림'))>0){  // 보기그림 / 추가보기그림
                             var example_img_1s = origin.indexOf('/보기그림');
                             var example_img_2s = origin.indexOf('/추가보기그림');
-                            var question = (origin.substring(number_e+1, example_img_1s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var question_ori = (origin.substring(number_e+1, example_img_1s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var question = question_nagative_words(question_ori);
                             var example_1 = (origin.substring(example_img_1s+5, example_img_2s)).replace(/(^\s*)|(\s*$)/gi, "");
                             var example_2 = (origin.substring(example_img_2s+7, answer_1s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var answer_1 = (origin.substring(answer_1s+1, answer_2s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var answer_2 = (origin.substring(answer_2s+1, answer_3s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var answer_3 = (origin.substring(answer_3s+1, answer_4s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var answer_4 = (origin.substring(answer_4s+1, answer_4e)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var gihowords_ori = (origin.substring(answer_1s+1, answer_2s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var answer_1 = other_giho_words(gihowords_ori);
+                            var gihowords_ori = (origin.substring(answer_2s+1, answer_3s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var answer_2 = other_giho_words(gihowords_ori);
+                            var gihowords_ori = (origin.substring(answer_3s+1, answer_4s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var answer_3 = other_giho_words(gihowords_ori);
+                            var gihowords_ori = (origin.substring(answer_4s+1, answer_4e)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var answer_4 = other_giho_words(gihowords_ori);
                             // variable - result
                             var result = number+'.\n'+question+'\n/보기그림\n'+example_1+'\n/추가보기그림\n'+example_2+'\n① '+answer_1+'\n② '+answer_2+'\n③ '+answer_3+'\n④ '+answer_4+'\n\n';
                             var consolelog = 'number : ' + number + '\nquestion : ' + question + '\nexample_img : ' + example_1 + '\nexample_img_add : ' + example_2 + '\n① : ' + answer_1 + '\n② : ' + answer_2 + '\n③ : ' + answer_3 + '\n④ : ' + answer_4+'\n\n';
@@ -704,13 +822,19 @@ function array_lv1_input(){
                         }else if((origin.indexOf('/추가보기문'))>0){  // 보기그림 / 추가보기문
                             var example_img_1s = origin.indexOf('/보기그림');
                             var example_txt_2s = origin.indexOf('/추가보기문');
-                            var question = (origin.substring(number_e+1, example_img_1s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var question_ori = (origin.substring(number_e+1, example_img_1s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var question = question_nagative_words(question_ori);
                             var example_1 = (origin.substring(example_img_1s+5, example_txt_2s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var example_2 = (origin.substring(example_txt_2s+6, answer_1s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var answer_1 = (origin.substring(answer_1s+1, answer_2s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var answer_2 = (origin.substring(answer_2s+1, answer_3s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var answer_3 = (origin.substring(answer_3s+1, answer_4s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var answer_4 = (origin.substring(answer_4s+1, answer_4e)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var gihowords_ori = (origin.substring(example_txt_2s+6, answer_1s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var example_2 = other_giho_words(gihowords_ori);
+                            var gihowords_ori = (origin.substring(answer_1s+1, answer_2s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var answer_1 = other_giho_words(gihowords_ori);
+                            var gihowords_ori = (origin.substring(answer_2s+1, answer_3s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var answer_2 = other_giho_words(gihowords_ori);
+                            var gihowords_ori = (origin.substring(answer_3s+1, answer_4s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var answer_3 = other_giho_words(gihowords_ori);
+                            var gihowords_ori = (origin.substring(answer_4s+1, answer_4e)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var answer_4 = other_giho_words(gihowords_ori);
                             // variable - result
                             var result = number+'.\n'+question+'\n/보기그림\n'+example_1+'\n/추가보기문\n'+example_2+'\n① '+answer_1+'\n② '+answer_2+'\n③ '+answer_3+'\n④ '+answer_4+'\n\n';
                             var consolelog = 'number : ' + number + '\nquestion : ' + question + '\nexample_img : ' + example_1 + '\nexample_txt_add : ' + example_2 + '\n① : ' + answer_1 + '\n② : ' + answer_2 + '\n③ : ' + answer_3 + '\n④ : ' + answer_4+'\n\n';
@@ -725,12 +849,17 @@ function array_lv1_input(){
                             html_question_answer(number, answer_1, answer_2, answer_3, answer_4);
                         }else{  // 보기그림만
                             var example_img_1s = origin.indexOf('/보기그림');
-                            var question = (origin.substring(number_e+1, example_img_1s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var question_ori = (origin.substring(number_e+1, example_img_1s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var question = question_nagative_words(question_ori);
                             var example_1 = (origin.substring(example_img_1s+5, answer_1s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var answer_1 = (origin.substring(answer_1s+1, answer_2s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var answer_2 = (origin.substring(answer_2s+1, answer_3s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var answer_3 = (origin.substring(answer_3s+1, answer_4s)).replace(/(^\s*)|(\s*$)/gi, "");
-                            var answer_4 = (origin.substring(answer_4s+1, answer_4e)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var gihowords_ori = (origin.substring(answer_1s+1, answer_2s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var answer_1 = other_giho_words(gihowords_ori);
+                            var gihowords_ori = (origin.substring(answer_2s+1, answer_3s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var answer_2 = other_giho_words(gihowords_ori);
+                            var gihowords_ori = (origin.substring(answer_3s+1, answer_4s)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var answer_3 = other_giho_words(gihowords_ori);
+                            var gihowords_ori = (origin.substring(answer_4s+1, answer_4e)).replace(/(^\s*)|(\s*$)/gi, "");
+                            var answer_4 = other_giho_words(gihowords_ori);
                             // variable - result
                             var result = number+'.\n'+question+'\n/보기그림\n'+example_1+'\n① '+answer_1+'\n② '+answer_2+'\n③ '+answer_3+'\n④ '+answer_4+'\n\n';
                             var consolelog = 'number : ' + number + '\nquestion : ' + question + '\nexample_img : ' + example_1 + '\n① : ' + answer_1 + '\n② : ' + answer_2 + '\n③ : ' + answer_3 + '\n④ : ' + answer_4+'\n\n';
@@ -744,11 +873,16 @@ function array_lv1_input(){
                             html_question_answer(number, answer_1, answer_2, answer_3, answer_4);
                         }
                     }else{  // 일반형 (보기문 없음)
-                        var question = (origin.substring(number_e+1, answer_1s)).replace(/(^\s*)|(\s*$)/gi, "");
-                        var answer_1 = (origin.substring(answer_1s+1, answer_2s)).replace(/(^\s*)|(\s*$)/gi, "");
-                        var answer_2 = (origin.substring(answer_2s+1, answer_3s)).replace(/(^\s*)|(\s*$)/gi, "");
-                        var answer_3 = (origin.substring(answer_3s+1, answer_4s)).replace(/(^\s*)|(\s*$)/gi, "");
-                        var answer_4 = (origin.substring(answer_4s+1, answer_4e)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var question_ori = (origin.substring(number_e+1, answer_1s)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var question = question_nagative_words(question_ori);
+                        var gihowords_ori = (origin.substring(answer_1s+1, answer_2s)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var answer_1 = other_giho_words(gihowords_ori);
+                        var gihowords_ori = (origin.substring(answer_2s+1, answer_3s)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var answer_2 = other_giho_words(gihowords_ori);
+                        var gihowords_ori = (origin.substring(answer_3s+1, answer_4s)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var answer_3 = other_giho_words(gihowords_ori);
+                        var gihowords_ori = (origin.substring(answer_4s+1, answer_4e)).replace(/(^\s*)|(\s*$)/gi, "");
+                        var answer_4 = other_giho_words(gihowords_ori);
                         // variable - result
                         var result = number+'.\n'+question+'\n① '+answer_1+'\n② '+answer_2+'\n③ '+answer_3+'\n④ '+answer_4+'\n\n';
                         var consolelog = 'number : ' + number + '\nquestion : ' + question + '\n① : ' + answer_1 + '\n② : ' + answer_2 + '\n③ : ' + answer_3 + '\n④ : ' + answer_4+'\n\n';
@@ -823,12 +957,51 @@ function btn_lv2(){
 
 // auto post_title
 function post_title(){
-    txt_title.value = '방송대 '+txt_object.value+' '+txt_kind.value+'시험 20'+txt_year.value+'년도 '+txt_seme.value+'학기 '+txt_grade.value+'학년 / 올에이클래스 모의고사';
+    txt_title.value = '20'+txt_year.value+'년 '+txt_no.value+'회 '+txt_license.value+' ('+txt_object.value+') 필기 / 올에이패스 모의고사';
 }
 
 // auto question_count
 function question_count(){
     txt_count.value = parseInt(txt_enum.value)-parseInt(txt_snum.value)+1;
+}
+
+// question nagative words
+function question_nagative_words(question_ori){
+    question_ori = question_ori.replaceAll('～', '~');
+    question_ori = question_ori.replaceAll('․', 'ㆍ');
+    question_ori = question_ori.replaceAll('·', 'ㆍ');
+    question_ori = question_ori.replaceAll('⋅', 'ㆍ');
+    question_ori = question_ori.replaceAll('󰡔', '『');
+    question_ori = question_ori.replaceAll('ꡔ', '『');
+    question_ori = question_ori.replaceAll('󰡕', '』');
+    question_ori = question_ori.replaceAll('ꡕ', '』');
+    question_ori = question_ori.replaceAll('｢', '「');
+    question_ori = question_ori.replaceAll('｣', '」');
+    question_ori = question_ori.replaceAll('‘', '\'');
+    question_ori = question_ori.replaceAll('’', '\'');
+    question_ori = question_ori.replaceAll('<', '&#60;');
+    question_ori = question_ori.replaceAll('>', '&#62;');
+    return question_ori;
+}
+
+// other words giho convertor
+// 일반문제부터 테스트 하시오.
+function other_giho_words(gihowords_ori){
+    gihowords_ori = gihowords_ori.replaceAll('～', '~');
+    gihowords_ori = gihowords_ori.replaceAll('․', 'ㆍ');
+    gihowords_ori = gihowords_ori.replaceAll('·', 'ㆍ');
+    gihowords_ori = gihowords_ori.replaceAll('⋅', 'ㆍ');
+    gihowords_ori = gihowords_ori.replaceAll('󰡔', '『');
+    gihowords_ori = gihowords_ori.replaceAll('ꡔ', '『');
+    gihowords_ori = gihowords_ori.replaceAll('󰡕', '』');
+    gihowords_ori = gihowords_ori.replaceAll('ꡕ', '』');
+    gihowords_ori = gihowords_ori.replaceAll('｢', '「');
+    gihowords_ori = gihowords_ori.replaceAll('｣', '」');
+    gihowords_ori = gihowords_ori.replaceAll('‘', '\'');
+    gihowords_ori = gihowords_ori.replaceAll('’', '\'');
+    gihowords_ori = gihowords_ori.replaceAll('<', '&#60;');
+    gihowords_ori = gihowords_ori.replaceAll('>', '&#62;');
+    return gihowords_ori;
 }
 
 // --------------------------------------------------------------------------------------
@@ -845,6 +1018,29 @@ String.prototype.replaceAll = function(org, dest) {
 
 function final_reset(){
     fnl.value = '';
+}
+
+// nagative words -> html convertor
+function nagative_words_to_html(nagawords){
+    nagawords = nagawords.replaceAll('/부정', '<span class="iub">');
+    nagawords = nagawords.replaceAll('/.부정', '</span>');
+    nagawords = nagawords.replaceAll('/밑줄', '<span class="iunder">');
+    nagawords = nagawords.replaceAll('/.밑줄', '</span>');
+    nagawords = nagawords.replaceAll('/굵게', '<span class="ibold">');
+    nagawords = nagawords.replaceAll('/.굵게', '</span>');
+    nagawords = nagawords.replaceAll('/기움', '<i>');
+    nagawords = nagawords.replaceAll('/.기움', '</i>');
+    nagawords = nagawords.replaceAll('/줄', '<br>');
+    nagawords = nagawords.replaceAll('/빈칸', '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
+    nagawords = nagawords.replaceAll('/숏빈칸', '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
+    nagawords = nagawords.replaceAll('/롱빈칸', '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
+    nagawords = nagawords.replaceAll('/윗첨자', '<sup>');
+    nagawords = nagawords.replaceAll('/.윗첨자', '</sup>');
+    nagawords = nagawords.replaceAll('/아랫첨자', '<sub>');
+    nagawords = nagawords.replaceAll('/.아랫첨자', '</sub>');
+    nagawords = nagawords.replaceAll('/이미지', '<img src="');
+    nagawords = nagawords.replaceAll('/.이미지', '">');
+    return nagawords;
 }
 
 // html_mobile_url_no
@@ -917,37 +1113,9 @@ function html_title(){
 
 // html_group_question_quiz
 function html_group_question_quiz(question){
-    // replace (effect)
-    question = question.replaceAll('/부정', '<span class="iub">');
-    question = question.replaceAll('/.부정', '</span>');
-    question = question.replaceAll('/밑줄', '<span class="iunder">');
-    question = question.replaceAll('/.밑줄', '</span>');
-    question = question.replaceAll('/굵게', '<span class="ibold">');
-    question = question.replaceAll('/.굵게', '</span>');
-    question = question.replaceAll('/기움', '<i>');
-    question = question.replaceAll('/.기움', '</i>');
-    question = question.replaceAll('/줄', '<br>');
-    question = question.replaceAll('/빈칸', '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
-    nagawords = nagawords.replaceAll('/숏빈칸', '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
-    nagawords = nagawords.replaceAll('/롱빈칸', '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
-    question = question.replaceAll('/윗첨자', '<sup>');
-    question = question.replaceAll('/.윗첨자', '</sup>');
-    question = question.replaceAll('/아랫첨자', '<sub>');
-    question = question.replaceAll('/.아랫첨자', '</sub>');
-    question = question.replaceAll('/이미지', '<img src="');
-    question = question.replaceAll('/.이미지', '">');
-    question = question.replaceAll('～', '~');
-    question = question.replaceAll('․', 'ㆍ');
-    question = question.replaceAll('·', 'ㆍ');
-    question = question.replaceAll('⋅', 'ㆍ');
-    question = question.replaceAll('󰡔', '『');
-    question = question.replaceAll('ꡔ', '『');
-    question = question.replaceAll('󰡕', '』');
-    question = question.replaceAll('ꡕ', '』');
-    question = question.replaceAll('｢', '「');
-    question = question.replaceAll('｣', '」');
-    question = question.replaceAll('‘', '\'');
-    question = question.replaceAll('’', '\'');
+    // replace (negative words to html)
+    var nagawords = question;
+    question = nagative_words_to_html(nagawords);
     // replace (main)
     src_group_question_quiz = '';
     src_group_question_quiz += '<!-- 그룹 문제 -->\n';
@@ -977,35 +1145,9 @@ function html_group_question_end(){
 // html_question_quiz
 function html_question_quiz(number, question){
     if(parseInt(number)<10){
-        // replace (Text Effect)
-        question = question.replaceAll('/부정', '<span class="iub">');
-        question = question.replaceAll('/.부정', '</span>');
-        question = question.replaceAll('/밑줄', '<span class="iunder">');
-        question = question.replaceAll('/.밑줄', '</span>');
-        question = question.replaceAll('/굵게', '<span class="ibold">');
-        question = question.replaceAll('/.굵게', '</span>');
-        question = question.replaceAll('/기움', '<i>');
-        question = question.replaceAll('/.기움', '</i>');
-        question = question.replaceAll('/줄', '<br>');
-        question = question.replaceAll('/빈칸', '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
-        question = question.replaceAll('/윗첨자', '<sup>');
-        question = question.replaceAll('/.윗첨자', '</sup>');
-        question = question.replaceAll('/아랫첨자', '<sub>');
-        question = question.replaceAll('/.아랫첨자', '</sub>');
-        question = question.replaceAll('/이미지', '<img src="');
-        question = question.replaceAll('/.이미지', '">');
-        question = question.replaceAll('～', '~');
-        question = question.replaceAll('․', 'ㆍ');
-        question = question.replaceAll('·', 'ㆍ');
-        question = question.replaceAll('⋅', 'ㆍ');
-        question = question.replaceAll('󰡔', '『');
-        question = question.replaceAll('ꡔ', '『');
-        question = question.replaceAll('󰡕', '』');
-        question = question.replaceAll('ꡕ', '』');
-        question = question.replaceAll('｢', '「');
-        question = question.replaceAll('｣', '」');
-        question = question.replaceAll('‘', '\'');
-        question = question.replaceAll('’', '\'');
+        // replace (negative words to html)
+        var nagawords = question;
+        question = nagative_words_to_html(nagawords);
         // replace (main)
         src_question_quiz = '';
         src_question_quiz += '<!-- 문제 : 0'+number+' -->\n';
@@ -1020,35 +1162,9 @@ function html_question_quiz(number, question){
         src_question_quiz += '\t\t\t</tr>\n';
         fnl.value += src_question_quiz;
     }else{
-        // replace (Text Effect)
-        question = question.replaceAll('/부정', '<span class="iub">');
-        question = question.replaceAll('/.부정', '</span>');
-        question = question.replaceAll('/밑줄', '<span class="iunder">');
-        question = question.replaceAll('/.밑줄', '</span>');
-        question = question.replaceAll('/굵게', '<span class="ibold">');
-        question = question.replaceAll('/.굵게', '</span>');
-        question = question.replaceAll('/기움', '<i>');
-        question = question.replaceAll('/.기움', '</i>');
-        question = question.replaceAll('/줄', '<br>');
-        question = question.replaceAll('/빈칸', '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
-        question = question.replaceAll('/윗첨자', '<sup>');
-        question = question.replaceAll('/.윗첨자', '</sup>');
-        question = question.replaceAll('/아랫첨자', '<sub>');
-        question = question.replaceAll('/.아랫첨자', '</sub>');
-        question = question.replaceAll('/이미지', '<img src="');
-        question = question.replaceAll('/.이미지', '">');
-        question = question.replaceAll('～', '~');
-        question = question.replaceAll('․', 'ㆍ');
-        question = question.replaceAll('·', 'ㆍ');
-        question = question.replaceAll('⋅', 'ㆍ');
-        question = question.replaceAll('󰡔', '『');
-        question = question.replaceAll('ꡔ', '『');
-        question = question.replaceAll('󰡕', '』');
-        question = question.replaceAll('ꡕ', '』');
-        question = question.replaceAll('｢', '「');
-        question = question.replaceAll('｣', '」');
-        question = question.replaceAll('‘', '\'');
-        question = question.replaceAll('’', '\'');
+        // replace (negative words to html)
+        var nagawords = question;
+        question = nagative_words_to_html(nagawords);
         // replace (main)
         src_question_quiz = '';
         src_question_quiz += '<!-- 문제 : '+number+' -->\n';
@@ -1067,35 +1183,9 @@ function html_question_quiz(number, question){
 
 // html_example_txt
 function html_example_txt(example_1){
-    // replace (Text Effect)
-    example_1 = example_1.replaceAll('/부정', '<span class="iub">');
-    example_1 = example_1.replaceAll('/.부정', '</span>');
-    example_1 = example_1.replaceAll('/밑줄', '<span class="iunder">');
-    example_1 = example_1.replaceAll('/.밑줄', '</span>');
-    example_1 = example_1.replaceAll('/굵게', '<span class="ibold">');
-    example_1 = example_1.replaceAll('/.굵게', '</span>');
-    example_1 = example_1.replaceAll('/기움', '<i>');
-    example_1 = example_1.replaceAll('/.기움', '</i>');
-    example_1 = example_1.replaceAll('/줄', '<br>');
-    example_1 = example_1.replaceAll('/빈칸', '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
-    example_1 = example_1.replaceAll('/윗첨자', '<sup>');
-    example_1 = example_1.replaceAll('/.윗첨자', '</sup>');
-    example_1 = example_1.replaceAll('/아랫첨자', '<sub>');
-    example_1 = example_1.replaceAll('/.아랫첨자', '</sub>');
-    example_1 = example_1.replaceAll('/이미지', '<img src="');
-    example_1 = example_1.replaceAll('/.이미지', '">');
-    example_1 = example_1.replaceAll('～', '~');
-    example_1 = example_1.replaceAll('․', 'ㆍ');
-    example_1 = example_1.replaceAll('·', 'ㆍ');
-    example_1 = example_1.replaceAll('⋅', 'ㆍ');
-    example_1 = example_1.replaceAll('󰡔', '『');
-    example_1 = example_1.replaceAll('ꡔ', '『');
-    example_1 = example_1.replaceAll('󰡕', '』');
-    example_1 = example_1.replaceAll('ꡕ', '』');
-    example_1 = example_1.replaceAll('｢', '「');
-    example_1 = example_1.replaceAll('｣', '」');
-    example_1 = example_1.replaceAll('‘', '\'');
-    example_1 = example_1.replaceAll('’', '\'');
+    // replace (negative words to html)
+    var nagawords = example_1;
+    example_1 = nagative_words_to_html(nagawords);
     // replace (main)
     src_example_txt = '';
     src_example_txt += '\t\t\t<!-- 보기문 -->\n';
@@ -1112,35 +1202,9 @@ function html_example_txt(example_1){
 
 // html_example_txt_add
 function html_example_txt_add(example_2){
-    // replace (Text Effect)
-    example_2 = example_2.replaceAll('/부정', '<span class="iub">');
-    example_2 = example_2.replaceAll('/.부정', '</span>');
-    example_2 = example_2.replaceAll('/밑줄', '<span class="iunder">');
-    example_2 = example_2.replaceAll('/.밑줄', '</span>');
-    example_2 = example_2.replaceAll('/굵게', '<span class="ibold">');
-    example_2 = example_2.replaceAll('/.굵게', '</span>');
-    example_2 = example_2.replaceAll('/기움', '<i>');
-    example_2 = example_2.replaceAll('/.기움', '</i>');
-    example_2 = example_2.replaceAll('/줄', '<br>');
-    example_2 = example_2.replaceAll('/빈칸', '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
-    example_2 = example_2.replaceAll('/윗첨자', '<sup>');
-    example_2 = example_2.replaceAll('/.윗첨자', '</sup>');
-    example_2 = example_2.replaceAll('/아랫첨자', '<sub>');
-    example_2 = example_2.replaceAll('/.아랫첨자', '</sub>');
-    example_2 = example_2.replaceAll('/이미지', '<img src="');
-    example_2 = example_2.replaceAll('/.이미지', '">');
-    example_2 = example_2.replaceAll('～', '~');
-    example_2 = example_2.replaceAll('․', 'ㆍ');
-    example_2 = example_2.replaceAll('·', 'ㆍ');
-    example_2 = example_2.replaceAll('⋅', 'ㆍ');
-    example_2 = example_2.replaceAll('󰡔', '『');
-    example_2 = example_2.replaceAll('ꡔ', '『');
-    example_2 = example_2.replaceAll('󰡕', '』');
-    example_2 = example_2.replaceAll('ꡕ', '』');
-    example_2 = example_2.replaceAll('｢', '「');
-    example_2 = example_2.replaceAll('｣', '」');
-    example_2 = example_2.replaceAll('‘', '\'');
-    example_2 = example_2.replaceAll('’', '\'');
+    // replace (negative words to html)
+    var nagawords = example_2;
+    example_2 = nagative_words_to_html(nagawords);
     // replace (main)
     src_example_txt_add = '';
     src_example_txt_add += '\t\t\t<!-- 추가보기문 -->\n';
@@ -1157,35 +1221,9 @@ function html_example_txt_add(example_2){
 
 // html_example_img
 function html_example_img(example_1){
-    // replace (Text Effect)
-    example_1 = example_1.replaceAll('/부정', '<span class="iub">');
-    example_1 = example_1.replaceAll('/.부정', '</span>');
-    example_1 = example_1.replaceAll('/밑줄', '<span class="iunder">');
-    example_1 = example_1.replaceAll('/.밑줄', '</span>');
-    example_1 = example_1.replaceAll('/굵게', '<span class="ibold">');
-    example_1 = example_1.replaceAll('/.굵게', '</span>');
-    example_1 = example_1.replaceAll('/기움', '<i>');
-    example_1 = example_1.replaceAll('/.기움', '</i>');
-    example_1 = example_1.replaceAll('/줄', '<br>');
-    example_1 = example_1.replaceAll('/빈칸', '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
-    example_1 = example_1.replaceAll('/윗첨자', '<sup>');
-    example_1 = example_1.replaceAll('/.윗첨자', '</sup>');
-    example_1 = example_1.replaceAll('/아랫첨자', '<sub>');
-    example_1 = example_1.replaceAll('/.아랫첨자', '</sub>');
-    example_1 = example_1.replaceAll('/이미지', '<img src="');
-    example_1 = example_1.replaceAll('/.이미지', '">');
-    example_1 = example_1.replaceAll('～', '~');
-    example_1 = example_1.replaceAll('․', 'ㆍ');
-    example_1 = example_1.replaceAll('·', 'ㆍ');
-    example_1 = example_1.replaceAll('⋅', 'ㆍ');
-    example_1 = example_1.replaceAll('󰡔', '『');
-    example_1 = example_1.replaceAll('ꡔ', '『');
-    example_1 = example_1.replaceAll('󰡕', '』');
-    example_1 = example_1.replaceAll('ꡕ', '』');
-    example_1 = example_1.replaceAll('｢', '「');
-    example_1 = example_1.replaceAll('｣', '」');
-    example_1 = example_1.replaceAll('‘', '\'');
-    example_1 = example_1.replaceAll('’', '\'');
+    // replace (negative words to html)
+    var nagawords = example_1;
+    example_1 = nagative_words_to_html(nagawords);
     // replace (main)
     src_example_img = '';
     src_example_img += '\t\t\t<!-- 보기그림 -->\n';
@@ -1203,35 +1241,9 @@ function html_example_img(example_1){
 
 // html_example_img_add
 function html_example_img_add(example_2){
-    // replace (Text Effect)
-    example_2 = example_2.replaceAll('/부정', '<span class="iub">');
-    example_2 = example_2.replaceAll('/.부정', '</span>');
-    example_2 = example_2.replaceAll('/밑줄', '<span class="iunder">');
-    example_2 = example_2.replaceAll('/.밑줄', '</span>');
-    example_2 = example_2.replaceAll('/굵게', '<span class="ibold">');
-    example_2 = example_2.replaceAll('/.굵게', '</span>');
-    example_2 = example_2.replaceAll('/기움', '<i>');
-    example_2 = example_2.replaceAll('/.기움', '</i>');
-    example_2 = example_2.replaceAll('/줄', '<br>');
-    example_2 = example_2.replaceAll('/빈칸', '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
-    example_2 = example_2.replaceAll('/윗첨자', '<sup>');
-    example_2 = example_2.replaceAll('/.윗첨자', '</sup>');
-    example_2 = example_2.replaceAll('/아랫첨자', '<sub>');
-    example_2 = example_2.replaceAll('/.아랫첨자', '</sub>');
-    example_2 = example_2.replaceAll('/이미지', '<img src="');
-    example_2 = example_2.replaceAll('/.이미지', '">');
-    example_2 = example_2.replaceAll('～', '~');
-    example_2 = example_2.replaceAll('․', 'ㆍ');
-    example_2 = example_2.replaceAll('·', 'ㆍ');
-    example_2 = example_2.replaceAll('⋅', 'ㆍ');
-    example_2 = example_2.replaceAll('󰡔', '『');
-    example_2 = example_2.replaceAll('ꡔ', '『');
-    example_2 = example_2.replaceAll('󰡕', '』');
-    example_2 = example_2.replaceAll('ꡕ', '』');
-    example_2 = example_2.replaceAll('｢', '「');
-    example_2 = example_2.replaceAll('｣', '」');
-    example_2 = example_2.replaceAll('‘', '\'');
-    example_2 = example_2.replaceAll('’', '\'');
+    // replace (negative words to html)
+    var nagawords = example_2;
+    example_2 = nagative_words_to_html(nagawords);
     // replace (main)
     src_example_img = '';
     src_example_img += '\t\t\t<!-- 추가보기그림 -->\n';
@@ -1249,122 +1261,18 @@ function html_example_img_add(example_2){
 
 // html_question_answer
 function html_question_answer(number, answer_1, answer_2, answer_3, answer_4){
-    // replace (Answer_1 Text Effect)
-    answer_1 = answer_1.replaceAll('/부정', '<span class="iub">');
-    answer_1 = answer_1.replaceAll('/.부정', '</span>');
-    answer_1 = answer_1.replaceAll('/밑줄', '<span class="iunder">');
-    answer_1 = answer_1.replaceAll('/.밑줄', '</span>');
-    answer_1 = answer_1.replaceAll('/굵게', '<span class="ibold">');
-    answer_1 = answer_1.replaceAll('/.굵게', '</span>');
-    answer_1 = answer_1.replaceAll('/기움', '<i>');
-    answer_1 = answer_1.replaceAll('/.기움', '</i>');
-    answer_1 = answer_1.replaceAll('/줄', '<br>');
-    answer_1 = answer_1.replaceAll('/빈칸', '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
-    answer_1 = answer_1.replaceAll('/윗첨자', '<sup>');
-    answer_1 = answer_1.replaceAll('/.윗첨자', '</sup>');
-    answer_1 = answer_1.replaceAll('/아랫첨자', '<sub>');
-    answer_1 = answer_1.replaceAll('/.아랫첨자', '</sub>');
-    answer_1 = answer_1.replaceAll('/이미지', '<img src="');
-    answer_1 = answer_1.replaceAll('/.이미지', '">');
-    answer_1 = answer_1.replaceAll('～', '~');
-    answer_1 = answer_1.replaceAll('․', 'ㆍ');
-    answer_1 = answer_1.replaceAll('·', 'ㆍ');
-    answer_1 = answer_1.replaceAll('⋅', 'ㆍ');
-    answer_1 = answer_1.replaceAll('󰡔', '『');
-    answer_1 = answer_1.replaceAll('ꡔ', '『');
-    answer_1 = answer_1.replaceAll('󰡕', '』');
-    answer_1 = answer_1.replaceAll('ꡕ', '』');
-    answer_1 = answer_1.replaceAll('｢', '「');
-    answer_1 = answer_1.replaceAll('｣', '」');
-    answer_1 = answer_1.replaceAll('‘', '\'');
-    answer_1 = answer_1.replaceAll('’', '\'');
-    // replace (Answer_2 Text Effect)
-    answer_2 = answer_2.replaceAll('/부정', '<span class="iub">');
-    answer_2 = answer_2.replaceAll('/.부정', '</span>');
-    answer_2 = answer_2.replaceAll('/밑줄', '<span class="iunder">');
-    answer_2 = answer_2.replaceAll('/.밑줄', '</span>');
-    answer_2 = answer_2.replaceAll('/굵게', '<span class="ibold">');
-    answer_2 = answer_2.replaceAll('/.굵게', '</span>');
-    answer_2 = answer_2.replaceAll('/기움', '<i>');
-    answer_2 = answer_2.replaceAll('/.기움', '</i>');
-    answer_2 = answer_2.replaceAll('/줄', '<br>');
-    answer_2 = answer_2.replaceAll('/빈칸', '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
-    answer_2 = answer_2.replaceAll('/윗첨자', '<sup>');
-    answer_2 = answer_2.replaceAll('/.윗첨자', '</sup>');
-    answer_2 = answer_2.replaceAll('/아랫첨자', '<sub>');
-    answer_2 = answer_2.replaceAll('/.아랫첨자', '</sub>');
-    answer_2 = answer_2.replaceAll('/이미지', '<img src="');
-    answer_2 = answer_2.replaceAll('/.이미지', '">');
-    answer_2 = answer_2.replaceAll('～', '~');
-    answer_2 = answer_2.replaceAll('․', 'ㆍ');
-    answer_2 = answer_2.replaceAll('·', 'ㆍ');
-    answer_2 = answer_2.replaceAll('⋅', 'ㆍ');
-    answer_2 = answer_2.replaceAll('󰡔', '『');
-    answer_2 = answer_2.replaceAll('ꡔ', '『');
-    answer_2 = answer_2.replaceAll('󰡕', '』');
-    answer_2 = answer_2.replaceAll('ꡕ', '』');
-    answer_2 = answer_2.replaceAll('｢', '「');
-    answer_2 = answer_2.replaceAll('｣', '」');
-    answer_2 = answer_2.replaceAll('‘', '\'');
-    answer_2 = answer_2.replaceAll('’', '\'');
-    // replace (Answer_3 Text Effect)
-    answer_3 = answer_3.replaceAll('/부정', '<span class="iub">');
-    answer_3 = answer_3.replaceAll('/.부정', '</span>');
-    answer_3 = answer_3.replaceAll('/밑줄', '<span class="iunder">');
-    answer_3 = answer_3.replaceAll('/.밑줄', '</span>');
-    answer_3 = answer_3.replaceAll('/굵게', '<span class="ibold">');
-    answer_3 = answer_3.replaceAll('/.굵게', '</span>');
-    answer_3 = answer_3.replaceAll('/기움', '<i>');
-    answer_3 = answer_3.replaceAll('/.기움', '</i>');
-    answer_3 = answer_3.replaceAll('/줄', '<br>');
-    answer_3 = answer_3.replaceAll('/빈칸', '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
-    answer_3 = answer_3.replaceAll('/윗첨자', '<sup>');
-    answer_3 = answer_3.replaceAll('/.윗첨자', '</sup>');
-    answer_3 = answer_3.replaceAll('/아랫첨자', '<sub>');
-    answer_3 = answer_3.replaceAll('/.아랫첨자', '</sub>');
-    answer_3 = answer_3.replaceAll('/이미지', '<img src="');
-    answer_3 = answer_3.replaceAll('/.이미지', '">');
-    answer_3 = answer_3.replaceAll('～', '~');
-    answer_3 = answer_3.replaceAll('․', 'ㆍ');
-    answer_3 = answer_3.replaceAll('·', 'ㆍ');
-    answer_3 = answer_3.replaceAll('⋅', 'ㆍ');
-    answer_3 = answer_3.replaceAll('󰡔', '『');
-    answer_3 = answer_3.replaceAll('ꡔ', '『');
-    answer_3 = answer_3.replaceAll('󰡕', '』');
-    answer_3 = answer_3.replaceAll('ꡕ', '』');
-    answer_3 = answer_3.replaceAll('｢', '「');
-    answer_3 = answer_3.replaceAll('｣', '」');
-    answer_3 = answer_3.replaceAll('‘', '\'');
-    answer_3 = answer_3.replaceAll('’', '\'');
-    // replace (Answer_4 Text Effect)
-    answer_4 = answer_4.replaceAll('/부정', '<span class="iub">');
-    answer_4 = answer_4.replaceAll('/.부정', '</span>');
-    answer_4 = answer_4.replaceAll('/밑줄', '<span class="iunder">');
-    answer_4 = answer_4.replaceAll('/.밑줄', '</span>');
-    answer_4 = answer_4.replaceAll('/굵게', '<span class="ibold">');
-    answer_4 = answer_4.replaceAll('/.굵게', '</span>');
-    answer_4 = answer_4.replaceAll('/기움', '<i>');
-    answer_4 = answer_4.replaceAll('/.기움', '</i>');
-    answer_4 = answer_4.replaceAll('/줄', '<br>');
-    answer_4 = answer_4.replaceAll('/빈칸', '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
-    answer_4 = answer_4.replaceAll('/윗첨자', '<sup>');
-    answer_4 = answer_4.replaceAll('/.윗첨자', '</sup>');
-    answer_4 = answer_4.replaceAll('/아랫첨자', '<sub>');
-    answer_4 = answer_4.replaceAll('/.아랫첨자', '</sub>');
-    answer_4 = answer_4.replaceAll('/이미지', '<img src="');
-    answer_4 = answer_4.replaceAll('/.이미지', '">');
-    answer_4 = answer_4.replaceAll('～', '~');
-    answer_4 = answer_4.replaceAll('․', 'ㆍ');
-    answer_4 = answer_4.replaceAll('·', 'ㆍ');
-    answer_4 = answer_4.replaceAll('⋅', 'ㆍ');
-    answer_4 = answer_4.replaceAll('󰡔', '『');
-    answer_4 = answer_4.replaceAll('ꡔ', '『');
-    answer_4 = answer_4.replaceAll('󰡕', '』');
-    answer_4 = answer_4.replaceAll('ꡕ', '』');
-    answer_4 = answer_4.replaceAll('｢', '「');
-    answer_4 = answer_4.replaceAll('｣', '」');
-    answer_4 = answer_4.replaceAll('‘', '\'');
-    answer_4 = answer_4.replaceAll('’', '\'');
+    // replace (negative words to html) answer_1
+    var nagawords = answer_1;
+    answer_1 = nagative_words_to_html(nagawords);
+    // replace (negative words to html) answer_2
+    var nagawords = answer_2;
+    answer_2 = nagative_words_to_html(nagawords);
+    // replace (negative words to html) answer_3
+    var nagawords = answer_3;
+    answer_3 = nagative_words_to_html(nagawords);
+    // replace (negative words to html) answer_4
+    var nagawords = answer_4;
+    answer_4 = nagative_words_to_html(nagawords);
     // replace (main)
     if(parseInt(number)<10){
         src_question_answer = '';
