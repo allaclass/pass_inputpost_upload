@@ -123,20 +123,20 @@ div#postView {
     border: 1px solid #777;
 }
 .menu textarea#txt_year,
-.menu textarea#txt_seme,
-.menu textarea#txt_grade,
+.menu textarea#txt_no,
+.menu textarea#txt_date,
 .menu textarea#txt_snum,
 .menu textarea#txt_enum,
 .menu textarea#txt_count {
     width: 32%;
 }
 
-.menu textarea#txt_object,
+/* .menu textarea#txt_object,
 .menu textarea#txt_kind,
 .menu textarea#txt_prof,
 .menu textarea#txt_range {
     width: 48.7%;
-}
+} */
 
 .menu textarea {
     margin-bottom: 5px;
