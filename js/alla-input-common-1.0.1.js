@@ -23,6 +23,7 @@ var array_answer = [];
 
 var txt_info = document.getElementById('txt_info');
 var txt_title = document.getElementById('txt_title');
+var txt_tag = document.getElementById('txt_tag');
 var txt_license = document.getElementById('txt_license');
 var txt_object = document.getElementById('txt_object');
 var txt_etcObject = document.getElementById('txt_etcObject');
@@ -58,7 +59,7 @@ var src_answer_table_footer = "";
 var src_shortcut = "";
 var src_notice_footer = "";
 
-txt_info.value = "[자격증명] \n[모의과목] \n[전체과목] \n[시행기관] \n[연도] \n[회차] \n[일시] \n[시작넘] \n[종료넘] \n[썸네일] \n[정  답] ";
+txt_info.value = "[자격증명] \n[모의과목] \n[전체과목] \n[시행기관] \n[연도] \n[회차] \n[일시] \n[시작넘] \n[종료넘] \n[썸네일] \n[정답] ";
 
 // txt_info data
 function info_input(){
@@ -101,6 +102,7 @@ function info_input(){
     txt_answer.value = infoAnswerData;
 
     post_title();
+    post_tag();
     question_count();
 }
 
@@ -961,7 +963,13 @@ function btn_lv2(){
 
 // auto post_title
 function post_title(){
-    txt_title.value = '20'+txt_year.value+'년 '+txt_noc.value+'회 '+txt_license.value+' ('+txt_object.value+') 필기 / 올에이패스 모의고사';
+    // txt_title.value = '20'+txt_year.value+'년 '+txt_noc.value+'회 '+txt_license.value+' ('+txt_object.value+') 필기 / 올에이패스 모의고사';
+    txt_title.value = txt_license.value+' ('+txt_object.value+') 20'+txt_year.value+'년 '+txt_noc.value+'회 필기 / 올에이패스 모의고사';
+}
+
+// auto post_tag
+function post_tag(){
+    txt_tag.value = txt_license.value+' ('+txt_object.value+')';
 }
 
 // auto question_count
@@ -1530,29 +1538,41 @@ function html_answer_table_footer(){
 
 // html_shortcut
 function html_shortcut(){
+    // 전체과목 쪼개기
+    var infoEtcObjectData = txt_etcObject.value;
+    var infoObject1 = infoEtcObjectData.indexOf('(1)');
+    var infoObject2 = infoEtcObjectData.indexOf('(2)');
+    var infoObject3 = infoEtcObjectData.indexOf('(3)');
+    var infoObject4 = infoEtcObjectData.indexOf('(4)');
+    var infoObject5 = infoEtcObjectData.indexOf('(5)');
+    var infoEtcObjectLength = infoEtcObjectData.length;
+
+    var infoObject1Data = (infoEtcObjectData.substring(infoObject1+3, infoObject2)).replace(/(^\s*)|(\s*$)/gi, "");
+    var infoObject2Data = (infoEtcObjectData.substring(infoObject2+3, infoObject3)).replace(/(^\s*)|(\s*$)/gi, "");
+    var infoObject3Data = (infoEtcObjectData.substring(infoObject3+3, infoObject4)).replace(/(^\s*)|(\s*$)/gi, "");
+    var infoObject4Data = (infoEtcObjectData.substring(infoObject4+3, infoObject5)).replace(/(^\s*)|(\s*$)/gi, "");
+    var infoObject5Data = (infoEtcObjectData.substring(infoObject5+3, infoEtcObjectLength)).replace(/(^\s*)|(\s*$)/gi, "");
+    // END : 전체과목 쪼개기
+
+    // 바로가기 DIV 소스
     src_shortcut = '';
     src_shortcut += '<!-- 타년도 문제 바로가기 영역 -->\n';
     src_shortcut += '<div class="allaOtherExamWrap">\n';
-    /*
-    src_shortcut += '\t<a href="https://allaclass.com/tag/'+txt_object.value+'%20'+txt_kind.value+'시험" target="_top">\n';
-    src_shortcut += '\t\t<div>\n';
-    src_shortcut += '\t\t\t<span class="allaOtherTitle">\''+txt_object.value+' '+txt_kind.value+'시험\'</span> 타년도 모의고사\n';
-    src_shortcut += '\t\t</div>\n';
-    src_shortcut += '\t\t<div>\n';
-    src_shortcut += '\t\t\t방송대 '+txt_object.value+' 기말시험 2019년도 / 올에이클래스 모의고사<br>\n';
-    src_shortcut += '\t\t\t방송대 '+txt_object.value+' 기말시험 2018년도 / 올에이클래스 모의고사<br>\n';
-    src_shortcut += '\t\t\t방송대 '+txt_object.value+' 기말시험 2017년도 / 올에이클래스 모의고사<br>\n';
-    src_shortcut += '\t\t\t방송대 '+txt_object.value+' 기말시험 2016년도 / 올에이클래스 모의고사<br>\n';
-    src_shortcut += '\t\t\t방송대 '+txt_object.value+' 기말시험 2015년도 / 올에이클래스 모의고사<br>\n';
-    src_shortcut += '\t\t\t방송대 '+txt_object.value+' 기말시험 2014년도 / 올에이클래스 모의고사<br>\n';
-    src_shortcut += '\t\t\t방송대 '+txt_object.value+' 기말시험 2013년도 / 올에이클래스 모의고사<br>\n';
-    src_shortcut += '\t\t</div>\n';
-    src_shortcut += '\t</a>\n';
-    */
+    src_shortcut += '\t<div>\n';
+    src_shortcut += '\t\t<span class="allaOtherTitle">\''+txt_license.value+' 필기시험\'</span> 타년도 모의고사 바로가기\n';
+    src_shortcut += '\t</div>\n';
+    src_shortcut += '\t<div>\n';
+    src_shortcut += '\t\t<a href="https://allapass.tistory.com/tag/'+txt_license.value+'%20%28'+infoObject1Data+'%29" target="_top">'+txt_license.value+' 1과목 '+infoObject1Data+'</a><br>\n';
+    src_shortcut += '\t\t<a href="https://allapass.tistory.com/tag/'+txt_license.value+'%20%28'+infoObject2Data+'%29" target="_top">'+txt_license.value+' 2과목 '+infoObject2Data+'</a><br>\n';
+    src_shortcut += '\t\t<a href="https://allapass.tistory.com/tag/'+txt_license.value+'%20%28'+infoObject3Data+'%29" target="_top">'+txt_license.value+' 3과목 '+infoObject3Data+'</a><br>\n';
+    src_shortcut += '\t\t<a href="https://allapass.tistory.com/tag/'+txt_license.value+'%20%28'+infoObject4Data+'%29" target="_top">'+txt_license.value+' 4과목 '+infoObject4Data+'</a><br>\n';
+    src_shortcut += '\t\t<a href="https://allapass.tistory.com/tag/'+txt_license.value+'%20%28'+infoObject5Data+'%29" target="_top">'+txt_license.value+' 5과목 '+infoObject5Data+'</a><br>\n';
+    src_shortcut += '\t</div>\n';
     src_shortcut += '</div>\n';
     src_shortcut += '<!-- // 타년도 문제 바로가기 영역 -->\n';
     src_shortcut += '<!-- ------------------------------------------------------------------------------------ -->\n\n';
     fnl.value += src_shortcut;
+    // END : 바로가기 DIV 소스
 }
 
 // html_notice_footer
