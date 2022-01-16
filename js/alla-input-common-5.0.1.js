@@ -1044,6 +1044,19 @@ function nagative_words_to_html(nagawords){
     nagawords = nagawords.replaceAll('/.아랫첨자', '</sub>');
     nagawords = nagawords.replaceAll('/이미지', '<img src="');
     nagawords = nagawords.replaceAll('/.이미지', '">');
+    // 보기문 기교
+    nagawords = nagawords.replaceAll('/단락 ', '<div class="allaExampleList_p">');
+    nagawords = nagawords.replaceAll('/.단락', '</div>');
+    nagawords = nagawords.replaceAll('/바 ', '<div class="allaExampleList_bar">');
+    nagawords = nagawords.replaceAll('/.바', '</div>');
+    nagawords = nagawords.replaceAll('/영소 ', '<div class="allaExampleList_eng">');
+    nagawords = nagawords.replaceAll('/.영소', '</div>');
+    nagawords = nagawords.replaceAll('/한글 ', '<div class="allaExampleList_kor">');
+    nagawords = nagawords.replaceAll('/.한글', '</div>');
+    nagawords = nagawords.replaceAll('/중앙 ', '<div class="allaExampleAlign_center">');
+    nagawords = nagawords.replaceAll('/.중앙', '</div>');
+    nagawords = nagawords.replaceAll('/우측 ', '<div class="allaExampleAlign_right">');
+    nagawords = nagawords.replaceAll('/.우측', '</div>');
     return nagawords;
 }
 
