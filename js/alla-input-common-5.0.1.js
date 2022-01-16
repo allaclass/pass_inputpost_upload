@@ -1019,7 +1019,6 @@ String.prototype.replaceAll = function(org, dest) {
 }
 
 // fnl.value reset 테스트 필요함
-
 function final_reset(){
     fnl.value = '';
 }
